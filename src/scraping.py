@@ -4,13 +4,14 @@ import datetime as dt
 import os
 import sys
 
+#External library
 import requests
 from bs4 import BeautifulSoup
 
 
 def get_now_time():
 
-    #Get the time in JST
+    #Get the current time in JST
     JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
     now = dt.datetime.now(JST)
 
@@ -18,9 +19,8 @@ def get_now_time():
     date = now.day
     hours = now.hour
     minutes = now.minutes
-    day = now.weekday()
 
-    return [month, date, hours, minutes, day]
+    return [month, date, hours, minutes]
 
 
 def convert_time(month, date, day):
@@ -37,22 +37,28 @@ def convert_time(month, date, day):
     else:
         date = str(date)
 
-    #Japanese day of week
-    DAY_LIST = ['月', '火', '水', '木', '金', '土', '日']
+    return '{}/{}'.format(month, date)
 
-    return '{}/{} ({})'.format(month, date, DAY_LIST[day])
+
+def remove_text(text, today):
+
+    text_list = text.split('\n')
+
+    #Delete null element in text_list
+    text_list = filter(lambda t: t != '', text_list)
+
+    #Remove all space in text_list
+    text_list = list(map(lambda s: s.replace(' ', ''), text_list))
 
 
 #Fetch today's all stream
 def fetch_today_list():
 
     SOURCE_URL = 'https://schedule.hololive.tv/simple'
-    month, date, hours, minutes, day = get_now_time()
+    month, date, hours, minutes = get_now_time()
 
-    #Convert the time to Japanese format time scraping
-    today = convert_time(month, date, day) 
-
-    
+    #Convert the time format to search source HTML 
+    today = convert_time(month, date)
 
     try:
         req = requests.get(SOURCE_URL, timeout=3)
