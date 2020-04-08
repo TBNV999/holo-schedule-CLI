@@ -1,12 +1,11 @@
 #Scrape today's schedule from Hololive official schedule
 
+
 import datetime as dt
 import os
 import sys
 
-#External library
 import requests
-from bs4 import BeautifulSoup
 
 
 def get_now_time():
@@ -18,12 +17,12 @@ def get_now_time():
     month = now.month
     date = now.day
     hours = now.hour
-    minutes = now.minutes
+    minutes = now.minute
 
     return [month, date, hours, minutes]
 
 
-def convert_time(month, date, day):
+def convert_time(month, date):
 
     if month < 10:
         month = '0' + str(month)
@@ -50,9 +49,18 @@ def remove_text(text, today):
     #Remove all space in text_list
     text_list = list(map(lambda s: s.replace(' ', ''), text_list))
 
+    today_index = text_list.index(today)
+    text_list = text_list[today_index:]
+
+    SPAN = '<divclass="holodulenavbar-text"style="letter-spacing:0.3em;">'
+    last_index = text_list.index(SPAN)
+    text_list = text_list[:last_index]
+
+    return text_list
+ 
 
 #Fetch today's all stream
-def fetch_today_list():
+def fetch_source_html():
 
     SOURCE_URL = 'https://schedule.hololive.tv/simple'
     month, date, hours, minutes = get_now_time()
@@ -70,3 +78,7 @@ def fetch_today_list():
     if req.status_code != 200:
         print("An error occured!")
         sys.exit()
+
+    text_list = remove_text(req.text, today)
+
+    return text_list
