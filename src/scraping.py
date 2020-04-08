@@ -20,7 +20,7 @@ def get_now_time():
     minutes = now.minutes
     day = now.weekday()
 
-    return [month, day, hours, minutes]
+    return [month, date, hours, minutes, day]
 
 
 def convert_time(month, date, day):
