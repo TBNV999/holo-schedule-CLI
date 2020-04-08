@@ -4,15 +4,25 @@ import datetime as dt
 import os
 import sys
 
-import scraping
+from fetch_html import *
 
 import requests
-from bs4 import BeautifulSoup
+
+
+def clear():
+
+    if os.name == "nt":
+        command = "cls"
+    
+    else:
+        command = "clear"
+
+    os.system(command)
 
 
 def main():
 
-    fetch_today_list()
+    source_html = fetch_source_html()
 
 
 if __name__ == '__main__':
