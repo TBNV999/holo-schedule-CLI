@@ -43,10 +43,9 @@ def remove_text(text, today):
 
     text_list = text.split('\n')
 
-    #Delete null element in text_list
+    #Delete null element and escape charactors and space in text_list
     text_list = filter(lambda t: t != '', text_list)
-
-    #Remove all space in text_list
+    text_list = list(map(lambda s: s.replace('\r', ''), text_list))
     text_list = list(map(lambda s: s.replace(' ', ''), text_list))
 
     today_index = text_list.index(today)
@@ -63,13 +62,14 @@ def remove_text(text, today):
 def fetch_source_html():
 
     SOURCE_URL = 'https://schedule.hololive.tv/simple'
+    HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
     month, date, hours, minutes = get_now_time()
 
     #Convert the time format to search source HTML 
     today = convert_time(month, date)
 
     try:
-        req = requests.get(SOURCE_URL, timeout=3)
+        req = requests.get(SOURCE_URL, headers=HEADER, timeout=3)
 
     except Exception:
         print("Connection timeout")
