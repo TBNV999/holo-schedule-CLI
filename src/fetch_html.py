@@ -54,7 +54,7 @@ def remove_text(text, today):
 
     SPAN = '<divclass="holodulenavbar-text"style="letter-spacing:0.3em;">'
     last_index = text_list.index(SPAN)
-    text_list = text_list[:last_index]
+    text_list = text_list[15:last_index]
 
     return text_list
  
