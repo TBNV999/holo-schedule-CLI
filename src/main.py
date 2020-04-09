@@ -1,12 +1,10 @@
 #Fetch the schedule of hololive live stream
 
-import datetime as dt
 import os
 import sys
 
 from fetch_html import *
-
-import requests
+from scraping import *
 
 
 def clear():
@@ -23,6 +21,7 @@ def clear():
 def main():
 
     source_html = fetch_source_html()
+    show_list(source_html)
 
 
 if __name__ == '__main__':
