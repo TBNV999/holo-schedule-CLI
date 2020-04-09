@@ -3,8 +3,8 @@
 import os
 import sys
 
-from fetch_html import *
-from scraping import *
+from src.scraping import *
+from src.fetch_html import *
 
 
 def clear():
