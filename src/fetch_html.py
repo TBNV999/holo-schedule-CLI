@@ -1,25 +1,11 @@
 #Scrape today's schedule from Hololive official schedule
 
-
-import datetime as dt
 import os
 import sys
 
+from src.util import *
+
 import requests
-
-
-def get_now_time():
-
-    #Get the current time in JST
-    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
-    now = dt.datetime.now(JST)
-
-    month = now.month
-    date = now.day
-    hours = now.hour
-    minutes = now.minute
-
-    return [month, date, hours, minutes]
 
 
 def convert_time(month, date):
@@ -44,7 +30,7 @@ def remove_text(text, today):
     text_list = text.split('\n')
 
     #Delete null element and escape charactors and space in text_list
-    text_list = filter(lambda t: t != '', text_list)
+    text_list = list(map(lambda s: s.replace(' ', ''), text_list))
     text_list = list(map(lambda s: s.replace('\r', ''), text_list))
     text_list = list(map(lambda s: s.replace(' ', ''), text_list))
 
@@ -53,7 +39,7 @@ def remove_text(text, today):
 
     SPAN = '<divclass="holodulenavbar-text"style="letter-spacing:0.3em;">'
     last_index = text_list.index(SPAN)
-    text_list = text_list[15:last_index]
+    text_list = text_list[0:last_index]
 
     return text_list
  
@@ -63,7 +49,7 @@ def fetch_source_html():
 
     SOURCE_URL = 'https://schedule.hololive.tv/simple'
     HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
-    month, date, hours, minutes = get_now_time()
+    month, date, hours = get_now_time()
 
     #Convert the time format to search source HTML 
     today = convert_time(month, date)
