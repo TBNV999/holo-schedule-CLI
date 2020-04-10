@@ -54,7 +54,9 @@ def scraping(source_html):
     stream_members_list = []
     stream_url_list = []
 
-    for i in range(len(source_html)):
+    html_line_length = len(source_html)
+
+    for i in range(html_line_length):
         
         if not re.match(pattern, source_html[i]) is None:
             time_list.append(source_html[i])
