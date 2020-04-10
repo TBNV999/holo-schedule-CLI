@@ -69,12 +69,10 @@ def scraping(source_html):
     return time_list, stream_members_list, stream_url_list
 
 
-def show_list(source_html):
+#Scrape lists from source HTML
+def get_list(source_html):
     
     time_list, stream_members_list, stream_url_list = scraping(source_html)
-    print('Time(JST)   Member  Stream_URL')
-
-    for i in range(len(time_list)):
-        print('{}~  {}  {}'.format(time_list[i], stream_members_list[i], stream_url_list[i]))
-
-   #hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
+    
+    return time_list, stream_members_list, stream_url_list
+       #hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
