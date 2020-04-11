@@ -30,9 +30,9 @@ def remove_text(text, today):
     text_list = text.split('\n')
 
     #Delete null element and escape charactors and space in text_list
-    text_list = list(map(lambda s: s.replace(' ', ''), text_list))
-    text_list = list(map(lambda s: s.replace('\r', ''), text_list))
-    text_list = list(map(lambda s: s.replace(' ', ''), text_list))
+    text_list = tuple(map(lambda s: s.replace(' ', ''), text_list))
+    text_list = tuple(map(lambda s: s.replace('\r', ''), text_list))
+    text_list = tuple(map(lambda s: s.replace(' ', ''), text_list))
 
     today_index = text_list.index(today)
     text_list = text_list[today_index:]
