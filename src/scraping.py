@@ -54,9 +54,7 @@ def scraping(source_html):
     stream_members_list = []
     stream_url_list = []
 
-    html_line_length = len(source_html)
-
-    for i in range(html_line_length):
+    for i in range(len(source_html)):
         
         if not re.match(pattern, source_html[i]) is None:
             time_list.append(source_html[i])
@@ -71,10 +69,12 @@ def scraping(source_html):
     return time_list, stream_members_list, stream_url_list
 
 
-#Scrape lists from source HTML
-def get_list(source_html):
+def show_list(source_html):
     
     time_list, stream_members_list, stream_url_list = scraping(source_html)
-    
-    return time_list, stream_members_list, stream_url_list
-       #hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
+    print('Time(JST)   Member  Stream_URL')
+
+    for i in range(len(time_list)):
+        print('{}~  {}  {}'.format(time_list[i], stream_members_list[i], stream_url_list[i]))
+
+   #hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
