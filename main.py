@@ -14,7 +14,7 @@ def main():
     source_html = fetch_source_html()
     time_list, stream_members_list, stream_url_list = get_list(source_html)
 
-    print('Index   Time(JST)  Member      Stream_URL')
+    print('Index   Time(JST)  Member          Stream_URL')
 
     #All three lists have the same length
     lists_length = len(time_list)
@@ -27,9 +27,8 @@ def main():
         else:
             space = ''
 
-        m_space = ' ' * (7 - len(stream_members_list[i]))
-        print('{}{}      {}~     {}{}{}'.format(i, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
-        # TODO: Align columns
+        m_space = ' ' * ( (-2 * len(stream_members_list[i]) + 14))
+        print('{}{}      {}~     {}{}  {}'.format(i, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
 
 if __name__ == '__main__':
     main()
