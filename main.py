@@ -29,7 +29,7 @@ def main():
 
         m_space = ' ' * (7 - len(stream_members_list[i]))
         print('{}{}      {}~     {}{}{}'.format(i, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
-
+        # TODO: Align columns
 
 if __name__ == '__main__':
     main()
