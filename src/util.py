@@ -22,4 +22,4 @@ def get_now_time():
     date = now.day
     hours = now.hour
 
-    return [month, date, hours,]
+    return [month, date, hours]
