@@ -1,5 +1,5 @@
 # holo-schedule-CLI
-Hololive schedule scraping tool
+This branch is  a test branch. Plese do not execute it.
 
 # Requirement
 - Python 3.x
