@@ -9,7 +9,7 @@ from src.scraping import *
 from src.util import *
 
 
-def main():
+def main(options):
 
     source_html = fetch_source_html()
     time_list, stream_members_list, stream_url_list = get_list(source_html)
@@ -30,5 +30,21 @@ def main():
         m_space = ' ' * ( (-2 * len(stream_members_list[i]) + 14))
         print('{}{}      {}~     {}{}  {}'.format(i, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
 
+
 if __name__ == '__main__':
-    main()
+
+    argv = sys.argv
+
+    if len(argv) > 1:
+        argv.pop(0)
+        argv = eval_argv(argv)
+
+        if argv is None:
+            print("Error: invalid options")
+            sys.exit()
+
+        else:
+            main(argv)
+
+    else:
+        main(None)
