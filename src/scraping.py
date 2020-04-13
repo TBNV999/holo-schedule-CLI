@@ -2,21 +2,9 @@
 import re
 import time
 
+from src.util import *
+
 import requests
-
-
-def get_member_list():
-
-    MEMBER_FILE_PATH = 'text/hololive_members.txt'
-
-    with open(MEMBER_FILE_PATH, 'r') as f:
-
-        #Ignore the message of the first row
-        members_list = f.readlines()[1].split(',')
-        #Delete break symbol
-        members_list[-1] = members_list[-1].replace('\n', '')
-
-    return members_list
 
 
 #Delete non-hololive stream
@@ -54,9 +42,7 @@ def scraping(source_html):
     stream_members_list = []
     stream_url_list = []
 
-    html_line_length = len(source_html)
-
-    for i in range(html_line_length):
+    for i in range(len(source_html)):
         
         if not re.match(pattern, source_html[i]) is None:
             time_list.append(source_html[i])
@@ -71,10 +57,8 @@ def scraping(source_html):
     return time_list, stream_members_list, stream_url_list
 
 
-#Scrape lists from source HTML
 def get_list(source_html):
-    
+
     time_list, stream_members_list, stream_url_list = scraping(source_html)
-    
+
     return time_list, stream_members_list, stream_url_list
-       #hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
