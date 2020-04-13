@@ -3,11 +3,13 @@ import os
 
 def clear():
 
+    #Windows
     if os.name == 'nt':
-        command = "cls"
+        command = 'cls'
     
+    #POSIX
     else:
-        command = "clear"
+        command = 'clear'
 
     os.system(command)
 
