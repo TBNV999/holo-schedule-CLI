@@ -2,21 +2,9 @@
 import re
 import time
 
+from src.util import *
+
 import requests
-
-
-def get_member_list():
-
-    MEMBER_FILE_PATH = 'text/hololive_members.txt'
-
-    with open(MEMBER_FILE_PATH, 'r') as f:
-
-        #Ignore the message of the first row
-        members_list = f.readlines()[1].split(',')
-        #Delete break symbol
-        members_list[-1] = members_list[-1].replace('\n', '')
-
-    return members_list
 
 
 #Delete non-hololive stream
