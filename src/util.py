@@ -3,7 +3,7 @@ import os
 
 def clear():
 
-    if os.name == "nt":
+    if os.name == 'nt':
         command = "cls"
     
     else:
@@ -36,4 +36,6 @@ def get_now_time():
 
     return [month, date, hours]
 
+
+def show_help():
 

@@ -11,6 +11,19 @@ from src.util import *
 
 def main(options):
 
+    if not options is None:
+
+        if "--help" in options:
+            show_help()
+            sys.exit()
+
+        if "--eng" in options:
+            eng = True
+
+    else:
+        eng = False
+
+
     source_html = fetch_source_html()
     time_list, stream_members_list, stream_url_list = get_list(source_html)
 
