@@ -29,7 +29,7 @@ def main(options):
         show_in_english(time_list, stream_members_list, stream_url_list)
         sys.exit()
 
-    print('Index   Time(JST)  Member          Stream_URL')
+    print('Index   Time(JST)  Member          Streaming URL')
 
     #All three lists have the same length
     lists_length = len(time_list)

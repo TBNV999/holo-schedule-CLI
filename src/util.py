@@ -50,7 +50,7 @@ def get_en_list():
     #Delete break symbol
     en_list[-1] = en_list[-1].replace('\n', '')
 
-    return en_list
+    return tuple(en_list)
 
 
 def get_member_list():
@@ -65,7 +65,7 @@ def get_member_list():
     #Delete break symbol
     members_list[-1] = members_list[-1].replace('\n', '')
 
-    return members_list
+    return tuple(members_list)
 
 
 def get_now_time():
@@ -78,7 +78,7 @@ def get_now_time():
     date = now.day
     hours = now.hour
 
-    return [month, date, hours]
+    return (month, date, hours)
 
 
 def show_help():
@@ -94,7 +94,7 @@ def show_in_english(time_list, stream_members_list, stream_url_list):
     en_members_list = get_en_list()
     index_list = get_index_list(stream_members_list)
 
-    print('Index   Time(JST)  Member             Stream_URL')
+    print('Index   Time(JST)  Member             Streaming URL')
 
     #All three lists have the same length
     lists_length = len(time_list)
