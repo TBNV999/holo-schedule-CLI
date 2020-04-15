@@ -85,7 +85,12 @@ def show_help():
 
     with open('text/help', 'r') as f:
         
-        for line in f.readlines():
+        l = f.read().split('\n')
+
+        #Remove the message
+        l.pop(0)
+
+        for line in l:
             print(line)
 
 
