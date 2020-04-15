@@ -1,4 +1,4 @@
-#Show today's stream list from html
+#Generate today's stream list from html
 import re
 import time
 
@@ -51,7 +51,7 @@ def scraping(source_html):
             
     time_list, stream_members_list, stream_url_list = delete_exception(time_list, stream_members_list, stream_url_list)
 
-    #Delete first noise data
+    #Delete the first noise data
     stream_url_list = list(map(form_url, stream_url_list))
 
     return time_list, stream_members_list, stream_url_list

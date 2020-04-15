@@ -19,9 +19,11 @@ def main(options):
         if "--eng" in options:
             eng = True
 
+    #Run with no option
     else:
         eng = False
 
+    #Fetch html file from https://schedule.hololive.tv/simple
     source_html = fetch_source_html()
     time_list, stream_members_list, stream_url_list = get_list(source_html)
 
@@ -29,6 +31,7 @@ def main(options):
         show_in_english(time_list, stream_members_list, stream_url_list)
         sys.exit()
 
+    # Show in Japanese
     print('Index   Time(JST)  Member          Streaming URL')
 
     #All three lists have the same length
@@ -63,5 +66,6 @@ if __name__ == '__main__':
         else:
             main(argv)
 
+    #No option
     else:
         main(None)

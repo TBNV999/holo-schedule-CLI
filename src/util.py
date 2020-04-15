@@ -72,7 +72,7 @@ def get_member_list():
 
 def get_now_time():
 
-    #Get the current time in JST
+    #Get the current time in JST(UTC+9)
     JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
     now = dt.datetime.now(JST)
 
@@ -85,6 +85,7 @@ def get_now_time():
 
 def move_current_directory():
 
+    #Move to the directory that contains main.py
     path = __file__.replace('/src/util.py', '')
     os.chdir(path)
 
@@ -102,6 +103,7 @@ def show_help():
             print(line)
 
 
+#Show the schedule list in English
 def show_in_english(time_list, stream_members_list, stream_url_list):
 
     en_members_list = get_en_list()
