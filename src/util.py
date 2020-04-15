@@ -1,5 +1,8 @@
 import datetime as dt
 import os
+import sys
+
+sys.path.append
 
 def clear():
 
@@ -79,6 +82,12 @@ def get_now_time():
     hours = now.hour
 
     return (month, date, hours)
+
+
+def move_current_directory():
+
+    path = __file__.replace('/src/util.py', '')
+    os.chdir(path)
 
 
 def show_help():

@@ -50,6 +50,8 @@ if __name__ == '__main__':
 
     argv = sys.argv
 
+    move_current_directory()
+
     if len(argv) > 1:
         argv.pop(0)
         argv = eval_argv(argv)
