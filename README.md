@@ -9,7 +9,7 @@ Hololive schedule scraping tool
 
 # Usage
 By executing main\.py You can get information like these:
-- The time hololive streams will start in JST
+- The time hololive member's streaming will start in JST
 - Who is streaming
 - The streaming URL
 
