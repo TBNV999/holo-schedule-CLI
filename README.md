@@ -18,4 +18,4 @@ This program is a scraping tool. [The source page](https://schedule.hololive.tv/
 says the schedule is updated every 15 minutes so this program might not deal with the latest changes. 
 If you never want to miss any stream, it is recommended to follow the hololive member's Twitter account.  
 
-Now this program is available to use options. For example, you can change hololive member's name English. Plese check text/help 
+Now this program is available to use options. For example, you can change hololive member's name English. Plese check text/help or execute with --help option.

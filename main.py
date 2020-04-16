@@ -1,6 +1,5 @@
 #Fetch the schedule of hololive live stream
 
-import os
 import sys
 
 from src.fetch_html import *

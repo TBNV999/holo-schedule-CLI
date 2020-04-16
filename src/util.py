@@ -3,10 +3,14 @@ import os
 import sys
 
 
+#Global
+OS_NAME = os.name
+
+
 def clear():
 
     #Windows
-    if os.name == 'nt':
+    if OS_NAME == 'nt':
         command = 'cls'
     
     #POSIX
@@ -86,9 +90,18 @@ def get_now_time():
 def move_current_directory():
 
     #Move to the directory that contains main.py
-    path = __file__.replace('/src/util.py', '')
-    os.chdir(path)
+    #Change directory delimiter by OS
 
+    #Windows
+    if OS_NAME == 'nt':
+        path = __file__.replace(r'\src\util.py', '')
+        os.chdir(path)
+
+    #POSIX
+    else:
+        path = __file__.replace('/src/util.py', '')
+        os.chdir(path)
+        
 
 def show_date():
 
