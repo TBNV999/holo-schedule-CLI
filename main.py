@@ -12,11 +12,15 @@ def main(options):
 
     if not options is None:
 
-        if "--help" in options:
+        if '--help' in options:
             show_help()
             sys.exit()
 
-        if "--eng" in options:
+        if '--date' in options:
+            show_date()
+            sys.exit()
+
+        if '--eng' in options:
             eng = True
 
     #Run with no option
@@ -60,7 +64,7 @@ if __name__ == '__main__':
         argv = eval_argv(argv)
 
         if argv is None:
-            print("Error: invalid options")
+            print('Error: invalid options')
             sys.exit()
 
         else:

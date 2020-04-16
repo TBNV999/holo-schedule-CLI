@@ -30,7 +30,7 @@ def get_index_list(stream_members_list):
 
 def eval_argv(argv):
 
-    valid_options_list = ["--help", "--eng"]
+    valid_options_list = ['--help', '--eng', '--date']
 
     for option in argv:
 
@@ -88,6 +88,25 @@ def move_current_directory():
     #Move to the directory that contains main.py
     path = __file__.replace('/src/util.py', '')
     os.chdir(path)
+
+
+def show_date():
+
+    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
+    now = dt.datetime.now(JST)
+
+    month = now.month
+    date = now.day
+    hours = now.hour
+    minutes = now.minute
+
+    if hours < 10:
+        hours = '0' + str(hours)
+
+    if minutes < 10:
+        minutes = '0' + str(minutes)
+
+    print('{}/{} {}:{} (JST)'.format(month, date, hours, minutes))
 
 
 def show_help():
