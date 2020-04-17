@@ -62,6 +62,7 @@ if __name__ == '__main__':
         argv.pop(0)
         argv = eval_argv(argv)
 
+        # If inputed option is invalid eval_argv returns None
         if argv is None:
             print('Error: invalid options')
             sys.exit()
