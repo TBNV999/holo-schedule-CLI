@@ -34,11 +34,28 @@ def get_index_list(stream_members_list):
 
 def eval_argv(argv):
 
-    valid_options_list = ['--help', '--eng', '--date']
+    valid_options_list = ['--help', '--eng', '--date', '--tomorrow']
+
+    #Option that is not available with other options
+    special_options = ['--help', '--date']
+    non_special_options = ['--eng', '--tomorrow']
+
+    s_flag = 0
+    n_flag = False
 
     for option in argv:
 
         if not option in valid_options_list:
+            return None
+
+        if option in special_options:
+            s_flag += 1 
+
+        if option in non_special_options:
+            n_flag = True
+
+        if s_flag and n_flag or s_flag > 1:
+
             return None
 
     return argv
@@ -82,9 +99,8 @@ def get_now_time():
 
     month = now.month
     date = now.day
-    hours = now.hour
 
-    return (month, date, hours)
+    return (month, date)
 
 
 def move_current_directory():

@@ -6,3 +6,5 @@ Options:
 --eng   Make displayed hololive member's name English
 
 --date  Get the current time in JST
+
+Notes: You cannot use --help or --date with other options

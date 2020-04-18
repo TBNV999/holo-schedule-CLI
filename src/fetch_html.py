@@ -56,7 +56,7 @@ def fetch_source_html():
     SOURCE_URL = 'https://schedule.hololive.tv/simple'
     #Temporary user agent
     HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
-    month, date, hours = get_now_time()
+    month, date = get_now_time()
 
     #Convert the time format to search source HTML 
     today = convert_time(month, date)
