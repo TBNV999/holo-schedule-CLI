@@ -19,3 +19,5 @@ says the schedule is updated every 15 minutes so this program might not deal wit
 If you never want to miss any stream, it is recommended to follow the hololive member's Twitter account.  
 
 Now this program is available to use options. For example, you can change hololive member's name English. Plese check text/help or execute with --help option.
+
+Now I'm trying to available tomorrow option that shows tomorrow's schedule list.
