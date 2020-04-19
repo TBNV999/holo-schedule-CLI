@@ -103,6 +103,18 @@ def get_now_time():
     return (month, date)
 
 
+def get_tomorrow():
+
+    #Get the tomorrow date in JST
+    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
+    tomorrow = dt.datetime.now() + dt.timedelta(days=1)
+
+    month = tomorrow.month
+    date = tomorrow.day
+
+    return (month, date)
+
+
 def move_current_directory():
 
     #Move to the directory that contains main.py
