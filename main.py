@@ -9,6 +9,10 @@ from src.util import *
 
 def main(options):
 
+
+    #Option flags
+    eng_flag = False
+    tomorrow_flag = False
     if not options is None:
 
         if '--help' in options:
@@ -20,17 +24,16 @@ def main(options):
             sys.exit()
 
         if '--eng' in options:
-            eng = True
+            eng_flag = True
 
-    #Run with no option
-    else:
-        eng = False
+        if '--tomorrow' in options:
+            tomorrow_flag = True
 
     #Fetch html file from https://schedule.hololive.tv/simple
-    source_html = fetch_source_html()
+    source_html = fetch_source_html(tomorrow_flag)
     time_list, stream_members_list, stream_url_list = get_list(source_html)
 
-    if eng:
+    if eng_flag:
         show_in_english(time_list, stream_members_list, stream_url_list)
         sys.exit()
 
