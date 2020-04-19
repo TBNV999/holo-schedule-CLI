@@ -25,7 +25,7 @@ def convert_time(month, date):
     return '{}/{}'.format(month, date)
 
 
-def remove_text(text, date):
+def remove_text(text, date, is_tomorrow):
 
     text_list = text.split('\n')
 
@@ -34,7 +34,15 @@ def remove_text(text, date):
     text_list = tuple(map(lambda s: s.replace('\r', ''), text_list))
     text_list = tuple(map(lambda s: s.replace(' ', ''), text_list))
 
-    date_index = text_list.index(date)
+    try:
+        date_index = text_list.index(date)
+    
+    #Sometimes there is no streming at tomorrow's schedule
+    except:
+        print('No streming found on tomorrow')
+        sys.exit()
+
+
     text_list = text_list[date_index:]
 
     SPAN = '<divclass="holodulenavbar-text"style="letter-spacing:0.3em;">'
@@ -77,6 +85,6 @@ def fetch_source_html(is_tomorrow):
         print("An error occured!")
         sys.exit()
 
-    text_list = remove_text(req.text, date)
+    text_list = remove_text(req.text, date, is_tomorrow)
 
     return text_list
