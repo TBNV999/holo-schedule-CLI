@@ -12,4 +12,4 @@ Options:
 --all       Show all available live streaming schedule including holostars, etc.
 
 Notes: You cannot use --help or --date with other options.
-       But it is available to use --eng and --tomorrow at the same time.
+       But it is available to use --eng, --tomorrow and --all at the same time.
