@@ -1,6 +1,7 @@
 #Fetch the schedule of hololive live stream
 
 import sys
+import unicodedata
 
 from src.fetch_html import *
 from src.scraping import *
@@ -41,11 +42,16 @@ def main(options):
         show_in_english(time_list, stream_members_list, stream_url_list)
         sys.exit()
 
+        
+    #All three lists have the same length
+    lists_length = len(time_list)
+
+    for i in range(lists_length):
+        stream_members_list[i] = stream_members_list[i].replace('Sub','サブ')
+
     # Show in Japanese
     print('Index   Time(JST)  Member          Streaming URL')
 
-    #All three lists have the same length
-    lists_length = len(time_list)
 
     for i in range(lists_length):
 
@@ -55,7 +61,13 @@ def main(options):
         else:
             space = ''
 
-        m_space = ' ' * ( (-2 * len(stream_members_list[i]) + 14))
+        #Check charactor type of member name
+        if unicodedata.east_asian_width(stream_members_list[i][0]) == 'W':
+            m_space = ' ' * ( (-2 * len(stream_members_list[i]) + 14))
+
+        else:
+            m_space = ' ' * ( (-1 * len(stream_members_list[i]) ) + 14)
+
         print('{}{}      {}~     {}{}  {}'.format(i, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
 
 
