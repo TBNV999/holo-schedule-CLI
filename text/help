@@ -9,5 +9,7 @@ Options:
 
 --tomorrow  Show tomorrow's schedule list
 
+--all       Show all available live streaming schedule including holostars, etc.
+
 Notes: You cannot use --help or --date with other options.
        But it is available to use --eng and --tomorrow at the same time.

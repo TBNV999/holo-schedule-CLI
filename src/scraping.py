@@ -10,7 +10,7 @@ import requests
 #Delete non-hololive stream
 def delete_exception(time_list, stream_members_list, stream_url_list):
 
-    SOURCE_MEMBER_LIST = get_member_list()
+    SOURCE_MEMBER_LIST = get_member_list()[0:28]
 
     for i in range(len(time_list)):
 
@@ -34,7 +34,7 @@ def form_url(url):
     return url
 
 
-def scraping(source_html):
+def scraping(source_html, is_all):
 
     pattern = re.compile('\d\d:\d\d')
 
@@ -49,7 +49,8 @@ def scraping(source_html):
             stream_members_list.append(source_html[i+1])
             stream_url_list.append(source_html[i-7])
             
-    time_list, stream_members_list, stream_url_list = delete_exception(time_list, stream_members_list, stream_url_list)
+    if not is_all:
+        time_list, stream_members_list, stream_url_list = delete_exception(time_list, stream_members_list, stream_url_list)
 
     #Delete the first noise data
     stream_url_list = list(map(form_url, stream_url_list))
@@ -57,8 +58,8 @@ def scraping(source_html):
     return time_list, stream_members_list, stream_url_list
 
 
-def get_list(source_html):
+def get_list(source_html, is_all):
 
-    time_list, stream_members_list, stream_url_list = scraping(source_html)
+    time_list, stream_members_list, stream_url_list = scraping(source_html, is_all)
 
     return time_list, stream_members_list, stream_url_list

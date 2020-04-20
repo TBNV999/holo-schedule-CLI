@@ -13,6 +13,7 @@ def main(options):
     #Option flags
     eng_flag = False
     tomorrow_flag = False
+    all_flag = False
     if not options is None:
 
         if '--help' in options:
@@ -29,9 +30,12 @@ def main(options):
         if '--tomorrow' in options:
             tomorrow_flag = True
 
+        if '--all' in options:
+            all_flag = True
+
     #Fetch html file from https://schedule.hololive.tv/simple
     source_html = fetch_source_html(tomorrow_flag)
-    time_list, stream_members_list, stream_url_list = get_list(source_html)
+    time_list, stream_members_list, stream_url_list = get_list(source_html, all_flag)
 
     if eng_flag:
         show_in_english(time_list, stream_members_list, stream_url_list)

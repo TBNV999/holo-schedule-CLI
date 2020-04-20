@@ -34,11 +34,11 @@ def get_index_list(stream_members_list):
 
 def eval_argv(argv):
 
-    valid_options_list = ['--help', '--eng', '--date', '--tomorrow']
+    valid_options_list = ['--help', '--eng', '--date', '--tomorrow', '--all']
 
     #Option that is not available with other options
     special_options = ['--help', '--date']
-    non_special_options = ['--eng', '--tomorrow']
+    non_special_options = ['--eng', '--tomorrow', '--all']
 
     s_flag = 0
     n_flag = False
