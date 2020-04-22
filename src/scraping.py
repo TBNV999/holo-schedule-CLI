@@ -10,6 +10,7 @@ import requests
 #Delete non-hololive stream
 def delete_exception(time_list, stream_members_list, stream_url_list):
 
+    #Slice to get only hololive members
     SOURCE_MEMBER_LIST = get_member_list()[0:28]
 
     for i in range(len(time_list)):

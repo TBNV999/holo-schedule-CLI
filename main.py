@@ -15,6 +15,7 @@ def main(options):
     eng_flag = False
     tomorrow_flag = False
     all_flag = False
+
     if not options is None:
 
         if '--help' in options:

@@ -36,8 +36,10 @@ def eval_argv(argv):
 
     valid_options_list = ['--help', '--eng', '--date', '--tomorrow', '--all']
 
-    #Option that is not available with other options
+    #Options that is not available with other options
     special_options = ['--help', '--date']
+
+    #Options that is available to use other non special option at the same time
     non_special_options = ['--eng', '--tomorrow', '--all']
 
     s_flag = 0
