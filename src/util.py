@@ -131,6 +131,34 @@ def move_current_directory():
     else:
         path = __file__.replace('/src/util.py', '')
         os.chdir(path)
+
+
+def option_check(options):
+
+    eng_flag = False
+    tomorrow_flag = False
+    all_flag = False
+
+    if not options is None:
+
+        if '--help' in options:
+            show_help()
+            sys.exit()
+
+        if '--date' in options:
+            show_date()
+            sys.exit()
+
+        if '--eng' in options:
+            eng_flag = True
+
+        if '--tomorrow' in options:
+            tomorrow_flag = True
+
+        if '--all' in options:
+            all_flag = True
+
+        return (eng_flag, tomorrow_flag, all_flag)
         
 
 def show_date():

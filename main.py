@@ -11,29 +11,15 @@ from src.util import *
 def main(options):
 
 
-    #Option flags
-    eng_flag = False
-    tomorrow_flag = False
-    all_flag = False
+    #Check options
+    if options is None:
 
-    if not options is None:
+        eng_flag = False
+        tomorrow_flag = False
+        all_flag = False
 
-        if '--help' in options:
-            show_help()
-            sys.exit()
-
-        if '--date' in options:
-            show_date()
-            sys.exit()
-
-        if '--eng' in options:
-            eng_flag = True
-
-        if '--tomorrow' in options:
-            tomorrow_flag = True
-
-        if '--all' in options:
-            all_flag = True
+    else:
+        eng_flag, tomorrow_flag, all_flag = option_check(options)
 
     #Fetch html file from https://schedule.hololive.tv/simple
     source_html = fetch_source_html(tomorrow_flag)
