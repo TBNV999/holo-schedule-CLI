@@ -20,7 +20,7 @@ If you never want to miss any stream, it is recommended to follow the hololive m
 
 Now this program is available to use options. For example, you can change hololive member's name English. Plese check text/help or execute with --help option.  
 
-A moive will be on schedule after it is posted. The displayed time is published time.  
+A moive will be on schedule after it is posted. The displayed time is its published time.  
 
 # Screenshot
 ![sc](https://user-images.githubusercontent.com/42367122/79976625-e26f4700-84d7-11ea-9e36-e5262e317fbd.png)  
