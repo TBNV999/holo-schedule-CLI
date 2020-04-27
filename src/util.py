@@ -28,6 +28,7 @@ def get_index_list(stream_members_list):
     length = len(stream_members_list)
 
     for i in range(length):
+        print(stream_members_list[i])
         index_list.append(JA_LIST.index(stream_members_list[i]))
 
     return index_list
@@ -159,6 +160,16 @@ def option_check(options):
 
     return (eng_flag, tomorrow_flag, all_flag)
         
+
+def replace_name(members_list, length):
+
+    for i in range(length):
+        members_list[i] = members_list[i].replace('Sub','サブ')
+        members_list[i] = members_list[i].replace('Risu','Ayunda Risu')
+        members_list[i] = members_list[i].replace('Moona','Moona Hoshinova')
+        members_list[i] = members_list[i].replace('Iofi','Airani Iofiteen')
+
+    return members_list
 
 def show_date():
 

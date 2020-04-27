@@ -33,6 +33,8 @@ def main(options):
     #All three lists have the same length
     lists_length = len(time_list)
 
+    stream_members_list = replace_name(stream_members_list, lists_length)
+
     for i in range(lists_length):
         stream_members_list[i] = stream_members_list[i].replace('Sub','サブ')
 
@@ -50,10 +52,10 @@ def main(options):
 
         #Check charactor type of member name
         if unicodedata.east_asian_width(stream_members_list[i][0]) == 'W':
-            m_space = ' ' * ( (-2 * len(stream_members_list[i]) + 14))
+            m_space = ' ' * ( (-2 * len(stream_members_list[i]) + 18))
 
         else:
-            m_space = ' ' * ( (-1 * len(stream_members_list[i]) ) + 14)
+            m_space = ' ' * ( (-1 * len(stream_members_list[i]) ) + 18)
 
         print('{}{}      {}~     {}{}  {}'.format(i, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
 
