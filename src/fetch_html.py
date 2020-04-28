@@ -8,23 +8,6 @@ from src.util import *
 import requests
 
 
-def convert_time(month, date):
-
-    if month < 10:
-        month = '0' + str(month)
-
-    else:
-        month = str(month)
-
-    if date < 10:
-        date = '0' + str(date)
-
-    else:
-        date = str(date)
-
-    return '{}/{}'.format(month, date)
-
-
 def remove_text(text, date, is_tomorrow):
 
     text_list = text.split('\n')
@@ -72,7 +55,7 @@ def fetch_source_html(is_tomorrow):
         month, date = get_now_time()
 
     #Convert the time format to search source HTML 
-    date = convert_time(month, date)
+    date = '{}/{}'.format(add_zero(month), add_zero(date))
 
     try:
         req = requests.get(SOURCE_URL, headers=HEADER, timeout=3)

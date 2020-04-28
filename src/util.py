@@ -8,6 +8,17 @@ global OS_NAME
 OS_NAME = os.name
 
 
+def add_zero(num):
+
+    if num < 10:
+        str_num = '0' + str(num)
+
+    else:
+        str_num = str(num)
+
+    return str_num
+
+
 def clear():
 
     #Windows
@@ -28,7 +39,6 @@ def get_index_list(stream_members_list):
     length = len(stream_members_list)
 
     for i in range(length):
-        print(stream_members_list[i])
         index_list.append(JA_LIST.index(stream_members_list[i]))
 
     return index_list
