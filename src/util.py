@@ -102,7 +102,7 @@ def get_member_list():
     #Delete break symbol
     members_list[-1] = members_list[-1].replace('\n', '')
 
-    return tuple(members_list)
+    return members_list
 
 
 def get_now_time():
