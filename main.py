@@ -51,6 +51,7 @@ def main(options):
             space = ''
 
         #Check charactor type of member name
+        #Contain Japanese
         if unicodedata.east_asian_width(stream_members_list[i][0]) == 'W':
             m_space = ' ' * ( (-2 * len(stream_members_list[i]) + 18))
 
@@ -72,7 +73,7 @@ if __name__ == '__main__':
 
         # If inputed option is invalid eval_argv returns None
         if argv is None:
-            print('Error: invalid options. execute with --help to check the options')
+            print('Error: invalid options. Execute with --help to check about options')
             sys.exit()
 
         else:

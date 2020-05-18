@@ -8,7 +8,7 @@ from src.util import *
 import requests
 
 
-def remove_text(text, date, is_tomorrow):
+def remove_text(text, date):
 
     text_list = text.split('\n')
 
@@ -22,7 +22,7 @@ def remove_text(text, date, is_tomorrow):
     
     #Sometimes there is no streming at tomorrow's schedule
     except:
-        print('No streming found on tomorrow')
+        print('No streming found')
         sys.exit()
 
 
@@ -68,6 +68,6 @@ def fetch_source_html(is_tomorrow):
         print("An error occured!")
         sys.exit()
 
-    text_list = remove_text(req.text, date, is_tomorrow)
+    text_list = remove_text(req.text, date)
 
     return text_list
