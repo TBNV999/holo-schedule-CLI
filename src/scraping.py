@@ -17,7 +17,7 @@ def delete_exception(time_list, stream_members_list, stream_url_list, is_all):
 
     else:
         #Slice to get only non-hololive members (e.g. holostars hololive-ID)
-        EXCEPTION_LIST = BILIBILI_LIST + get_member_list()[28:]
+        EXCEPTION_LIST = BILIBILI_LIST + get_member_list()[29:]
 
     for i in range(len(time_list)):
 
@@ -58,7 +58,7 @@ def scraping(source_html, is_all):
             
     time_list, stream_members_list, stream_url_list = delete_exception(time_list, stream_members_list, stream_url_list, is_all)
 
-    #Delete the first noise data
+    #Delete the noise data
     stream_url_list = list(map(form_url, stream_url_list))
 
     return time_list, stream_members_list, stream_url_list
