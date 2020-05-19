@@ -44,7 +44,7 @@ def main(options):
 
     for i in range(lists_length):
 
-        if i < 10:
+        if i < 9:
             space = ' '
 
         else:
@@ -58,7 +58,7 @@ def main(options):
         else:
             m_space = ' ' * ( (-1 * len(stream_members_list[i]) ) + 18)
 
-        print('{}{}      {}~     {}{}  {}'.format(i, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
+        print('{}{}      {}~     {}{}  {}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
 
 
 if __name__ == '__main__':
