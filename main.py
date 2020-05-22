@@ -35,9 +35,6 @@ def main(options):
 
     stream_members_list = replace_name(stream_members_list, lists_length)
 
-    for i in range(lists_length):
-        stream_members_list[i] = stream_members_list[i].replace('Sub','サブ')
-
     # Show in Japanese
     print('Index   Time(JST)  Member              Streaming URL')
 
