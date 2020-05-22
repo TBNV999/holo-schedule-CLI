@@ -13,11 +13,11 @@ def delete_exception(time_list, stream_members_list, stream_url_list, is_all):
     BILIBILI_LIST = ['Yogiri', 'Civia', 'SpadeEcho', 'Doris', 'Artia', 'Rosalyn']
 
     if is_all:
-        EXCEPTION_LIST = BILIBILI_LIST
+        EXCEPTION_LIST = set(BILIBILI_LIST)
 
     else:
         #Slice to get only non-hololive members (e.g. holostars hololive-ID)
-        EXCEPTION_LIST = BILIBILI_LIST + get_member_list()[29:]
+        EXCEPTION_LIST = set(BILIBILI_LIST + get_member_list()[29:])
 
     for i in range(len(time_list)):
 

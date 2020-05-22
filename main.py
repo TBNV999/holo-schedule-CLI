@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
     if len(argv) > 1:
         argv.pop(0)
-        argv = eval_argv(argv)
+        argv = set(eval_argv(argv))
 
         # If inputed option is invalid eval_argv returns None
         if argv is None:

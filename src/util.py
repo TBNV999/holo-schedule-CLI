@@ -46,13 +46,13 @@ def get_index_list(stream_members_list):
 
 def eval_argv(argv):
 
-    valid_options_list = ['--help', '--eng', '--date', '--tomorrow', '--all']
+    valid_options_list = {'--help', '--eng', '--date', '--tomorrow', '--all'}
 
     #Options that is not available with other options
-    special_options = ['--help', '--date']
+    special_options = {'--help', '--date'}
 
     #Options that is available to use other non special option at the same time
-    non_special_options = ['--eng', '--tomorrow', '--all']
+    non_special_options = {'--eng', '--tomorrow', '--all'}
 
     s_flag = 0
     n_flag = False
@@ -131,7 +131,7 @@ def get_tomorrow():
 
 def move_current_directory():
 
-    #Move to the directory that contains main.py
+    #Move to the directory that has main.py
     #Change directory delimiter by OS
 
     #Windows
