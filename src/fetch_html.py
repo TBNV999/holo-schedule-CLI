@@ -1,6 +1,5 @@
 #Scrape today's schedule from Hololive official schedule
 
-import os
 import sys
 
 from src.util import *

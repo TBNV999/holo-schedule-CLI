@@ -62,10 +62,3 @@ def scraping(source_html, is_all):
     stream_url_list = list(map(form_url, stream_url_list))
 
     return time_list, stream_members_list, stream_url_list
-
-
-def get_list(source_html, is_all):
-
-    time_list, stream_members_list, stream_url_list = scraping(source_html, is_all)
-
-    return time_list, stream_members_list, stream_url_list
