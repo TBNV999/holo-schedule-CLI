@@ -19,19 +19,6 @@ def add_zero(num):
     return str_num
 
 
-def clear():
-
-    #Windows
-    if OS_NAME == 'nt':
-        command = 'cls'
-    
-    #POSIX
-    else:
-        command = 'clear'
-
-    os.system(command)
-
-
 def get_index_list(stream_members_list):
 
     JA_LIST = get_member_list()
@@ -135,7 +122,7 @@ def move_current_directory():
     #Change directory delimiter by OS
 
     #Windows
-    if OS_NAME == 'nt':
+    if OS_NAME is 'nt':
         path = __file__.replace(r'\src\util.py', '')
         os.chdir(path)
 

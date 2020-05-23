@@ -10,25 +10,22 @@ import requests
 #Delete non-hololive stream
 def delete_exception(time_list, stream_members_list, stream_url_list, is_all):
 
-    BILIBILI_LIST = ['Yogiri', 'Civia', 'SpadeEcho', 'Doris', 'Artia', 'Rosalyn']
+    EXCEPTION_LIST = {'Yogiri', 'Civia', 'SpadeEcho', 'Doris', 'Artia', 'Rosalyn'}
 
-    if is_all:
-        EXCEPTION_LIST = set(BILIBILI_LIST)
-
-    else:
+    if not is_all:
         #Slice to get only non-hololive members (e.g. holostars hololive-ID)
-        EXCEPTION_LIST = set(BILIBILI_LIST + get_member_list()[29:])
+        EXCEPTION_LIST =  EXCEPTION_LIST | set(get_member_list()[29:])
 
     for i in range(len(time_list)):
 
         if stream_members_list[i] in EXCEPTION_LIST:
-            time_list[i] = 'DELETE'
-            stream_members_list[i] = 'DELETE'
-            stream_url_list[i] = 'DELETE'
+            time_list[i] = None
+            stream_members_list[i] = None
+            stream_url_list[i] = None
 
-    time_list = [i for i in time_list if i != 'DELETE']
-    stream_members_list = [i for i in stream_members_list if i != 'DELETE']
-    stream_url_list = [i for i in stream_url_list if i != 'DELETE']
+    time_list = [i for i in time_list if not i is None]
+    stream_members_list = [i for i in stream_members_list if not i is None]
+    stream_url_list = [i for i in stream_url_list if not i is None]
 
     return time_list, stream_members_list, stream_url_list
 
