@@ -175,14 +175,8 @@ def show_date():
 
     month = now.month
     date = now.day
-    hours = now.hour
-    minutes = now.minute
-
-    if hours < 10:
-        hours = '0' + str(hours)
-
-    if minutes < 10:
-        minutes = '0' + str(minutes)
+    hours = add_zero(now.hour)
+    minutes = add_zero(now.minute)
 
     print('{}/{} {}:{} (JST)'.format(month, date, hours, minutes))
 
