@@ -19,7 +19,7 @@ def remove_text(text, date):
     try:
         date_index = text_list.index(date)
     
-    #Sometimes there is no streming at tomorrow's schedule
+    #Sometimes there is no streming at schedule
     except:
         print('No streming found')
         sys.exit()

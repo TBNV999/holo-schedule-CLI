@@ -11,12 +11,13 @@ import requests
 def delete_exception(time_list, stream_members_list, stream_url_list, is_all):
 
     EXCEPTION_LIST = {'Yogiri', 'Civia', 'SpadeEcho', 'Doris', 'Artia', 'Rosalyn'}
+    length = len(time_list)
 
     if not is_all:
         #Slice to get only non-hololive members (e.g. holostars hololive-ID)
         EXCEPTION_LIST =  EXCEPTION_LIST | set(get_member_list()[29:])
 
-    for i in range(len(time_list)):
+    for i in range(length):
 
         if stream_members_list[i] in EXCEPTION_LIST:
             time_list[i] = None
@@ -41,12 +42,13 @@ def form_url(url):
 def scraping(source_html, is_all):
 
     pattern = re.compile('\d\d:\d\d')
+    length = len(source_html)
 
     time_list = []
     stream_members_list = []
     stream_url_list = []
 
-    for i in range(len(source_html)):
+    for i in range(length):
         
         if not re.match(pattern, source_html[i]) is None:
             time_list.append(source_html[i])
