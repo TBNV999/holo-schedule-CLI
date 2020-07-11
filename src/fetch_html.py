@@ -21,7 +21,7 @@ def remove_text(text, date):
     
     #Sometimes there is no streming at schedule
     except:
-        print('No streming found')
+        print('No streaming found')
         sys.exit()
 
 
