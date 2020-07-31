@@ -122,7 +122,7 @@ def move_current_directory():
     #Change directory delimiter by OS
 
     #Windows
-    if OS_NAME is 'nt':
+    if OS_NAME == 'nt':
         path = __file__.replace(r'\src\util.py', '')
         os.chdir(path)
 
