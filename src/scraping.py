@@ -14,7 +14,7 @@ def delete_exception(time_list, stream_members_list, stream_url_list):
     length = len(time_list)
 
     #Slice to get only non-hololive members (e.g. holostars hololive-ID)
-    EXCEPTION_LIST = set(get_member_list()[29:])
+    EXCEPTION_LIST = set(get_member_list()[34:])
 
     for i in range(length):
 
