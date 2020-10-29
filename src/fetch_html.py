@@ -43,7 +43,7 @@ def remove_text(text, date):
 #Fetch all stream in the day
 def fetch_source_html(is_tomorrow):
 
-    SOURCE_URL = 'https://schedule.hololive.tv/simple'
+    SOURCE_URL = 'http://bit.ly/hscli'
     #Temporary user agent
     HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
 
