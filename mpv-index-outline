@@ -1,0 +1,3 @@
+prompt user to input index number 
+bind stream url to index number
+open stream url in mpv using python-mpv
