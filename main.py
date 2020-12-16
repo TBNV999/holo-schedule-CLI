@@ -17,25 +17,30 @@ def main(options):
         eng_flag = False
         tomorrow_flag = False
         all_flag = False
-
+        est_flag = False
+ 
     else:
-        eng_flag, tomorrow_flag, all_flag = option_check(options)
+        eng_flag, tomorrow_flag, all_flag, est_flag = option_check(options)
 
     #Fetch html file from https://schedule.hololive.tv/simple
     source_html = fetch_source_html(tomorrow_flag)
     time_list, stream_members_list, stream_url_list = scraping(source_html, all_flag)
-
-    if eng_flag:
-        show_in_english(time_list, stream_members_list, stream_url_list)
+    
+    if est_flag:
+        est_convert(time_list, stream_members_list, stream_url_list, eng_flag)
         sys.exit()
-
-        
+    
+    if eng_flag:
+        show_in_english(time_list, stream_members_list, stream_url_list, est_flag)
+        sys.exit()
+    
     #All three lists have the same length
     lists_length = len(time_list)
 
     stream_members_list = replace_name(stream_members_list, lists_length)
 
     # Show in Japanese
+
     print('Index   Time(JST)  Member              Streaming URL')
 
 

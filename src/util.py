@@ -1,7 +1,7 @@
 import datetime as dt
 import os
 import sys
-
+import unicodedata
 
 #Global
 global OS_NAME 
@@ -33,13 +33,13 @@ def get_index_list(stream_members_list):
 
 def eval_argv(argv):
 
-    valid_options_list = {'--help', '--eng', '--date', '--tomorrow', '--all'}
+    valid_options_list = {'--help', '--eng', '--date', '--tomorrow', '--all', '--est'}
 
     #Options that is not available with other options
     special_options = {'--help', '--date'}
 
     #Options that is available to use other non special option at the same time
-    non_special_options = {'--eng', '--tomorrow', '--all'}
+    non_special_options = {'--eng', '--tomorrow', '--all', '--est'}
 
     s_flag = 0
     n_flag = False
@@ -137,6 +137,7 @@ def option_check(options):
     eng_flag = False
     tomorrow_flag = False
     all_flag = False
+    est_flag = False
 
     if '--help' in options:
         show_help()
@@ -155,7 +156,10 @@ def option_check(options):
     if '--all' in options:
         all_flag = True
 
-    return (eng_flag, tomorrow_flag, all_flag)
+    if '--est' in options:
+        est_flag = True
+
+    return (eng_flag, tomorrow_flag, all_flag, est_flag)
         
 
 def replace_name(members_list, length):
@@ -193,16 +197,70 @@ def show_help():
         for line in l:
             print(line)
 
+#Show EST
+def est_convert(time_list, stream_members_list, stream_url_list, eng_flag):
+   hours_list = [i.split(':')[0] for i in time_list]
+   minutes_list = [i.split(':')[1] for i in time_list]
+   hours_list = list(map(int, hours_list))
+   minutes_list.reverse()
+   time_list_est = []
+
+   for x in hours_list:  
+       if x <= 13:
+           x += 10
+           x = str(x)
+       else:
+           x -= 14
+           x = "0" + str(x)
+       temp_list = []
+       temp_list.append(x)
+       temp_list.append(minutes_list.pop())
+       temp_list = ":".join(temp_list)
+       time_list_est.append(temp_list)
+    
+   lists_length = len(time_list)
+
+   if eng_flag:
+       show_in_english(time_list_est, stream_members_list, stream_url_list, True)
+       sys.exit()
+
+   else:
+       stream_members_list = replace_name(stream_members_list, lists_length)
+
+   print('Index   Time(EST)  Member              Streaming URL')
+   for i in range(lists_length):
+
+        if i < 9:
+            space = ' '
+
+        else:
+            space = ''
+
+        #Check charactor type of member name
+        #Contain Japanese
+        if unicodedata.east_asian_width(stream_members_list[i][0]) == 'W':
+            m_space = ' ' * ( (-2 * len(stream_members_list[i]) + 18))
+
+        else:
+            m_space = ' ' * ( (-1 * len(stream_members_list[i]) ) + 18)
+
+        print('{}{}      {}~     {}{}  {}'.format(i+1, space, time_list_est[i], stream_members_list[i], m_space, stream_url_list[i]))
+
+
+   
 
 #Show the schedule list in English
-def show_in_english(time_list, stream_members_list, stream_url_list):
+def show_in_english(time_list, stream_members_list, stream_url_list, est_flag):
 
     en_members_list = get_en_list()
     index_list = get_index_list(stream_members_list)
-
-    print('Index   Time(JST)  Member             Streaming URL')
-
-    #All three lists have the same length
+    
+    if est_flag:
+     print('Index   Time(EST)  Member             Streaming URL')
+    else:
+     print('Index   Time(JST)  Member             Streaming URL')
+   
+   #All three lists have the same length
     lists_length = len(time_list)
 
     for i in range(lists_length):
