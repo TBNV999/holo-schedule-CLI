@@ -198,12 +198,15 @@ def show_help():
             print(line)
 
 #Show EST
+
 def est_convert(time_list, stream_members_list, stream_url_list, eng_flag):
+
    hours_list = [i.split(':')[0] for i in time_list]
    minutes_list = [i.split(':')[1] for i in time_list]
    hours_list = list(map(int, hours_list))
    minutes_list.reverse()
    time_list_est = []
+
 
    for x in hours_list:  
        if x <= 13:
@@ -212,6 +215,7 @@ def est_convert(time_list, stream_members_list, stream_url_list, eng_flag):
        else:
            x -= 14
            x = "0" + str(x)
+
        temp_list = []
        temp_list.append(x)
        temp_list.append(minutes_list.pop())
@@ -219,6 +223,7 @@ def est_convert(time_list, stream_members_list, stream_url_list, eng_flag):
        time_list_est.append(temp_list)
     
    lists_length = len(time_list)
+
 
    if eng_flag:
        show_in_english(time_list_est, stream_members_list, stream_url_list, True)
