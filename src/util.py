@@ -19,6 +19,16 @@ def add_zero(num):
     return str_num
 
 
+def check_timezone():
+
+    TIMEZONE_PATH = 'text/timezone'
+
+    with open(TIMEZONE_PATH, 'r') as f:
+        timezone = f.read().replace('\n', '')
+
+    return timezone
+
+
 def get_index_list(stream_members_list):
 
     JA_LIST = get_member_list()
@@ -195,12 +205,12 @@ def show_help():
 
 
 #Show the schedule list in English
-def show_in_english(time_list, stream_members_list, stream_url_list):
+def show_in_english(time_list, stream_members_list, stream_url_list, timezone):
 
     en_members_list = get_en_list()
     index_list = get_index_list(stream_members_list)
 
-    print('Index   Time(JST)  Member             Streaming URL')
+    print('Index   Time       Member             Streaming URL   ({})'.format(timezone))
 
     #All three lists have the same length
     lists_length = len(time_list)
@@ -215,3 +225,49 @@ def show_in_english(time_list, stream_members_list, stream_url_list):
 
         m_space = ' ' * ( (-1 * len(en_members_list[index_list[i]]) ) + 17)
         print('{}{}      {}~     {}{}  {}'.format(i, space, time_list[i], en_members_list[index_list[i]], m_space, stream_url_list[i]))
+
+
+def timezone_convert(time_list, timezone):
+
+    import pytz
+
+    new_date_list = []
+    hour_list = []
+    minute_list = []
+
+    length = len(time_list)
+
+    for i in range(length):
+        
+        tmp = time_list[i].split(':')
+        hour_list.append(int(tmp[0]))
+        minute_list.append(int(tmp[1]))
+        
+    now = dt.datetime.now()
+    year = now.year
+    month = now.month
+    day = now.day
+    JST = pytz.timezone('Asia/Tokyo')
+
+    new_date_list = list(map(lambda x: JST.localize(x), new_date_list))
+
+    for i in range(length):
+
+        new_date_list.append(dt.datetime(year, month, day, hour_list[i], minute_list[i]))
+
+    new_timezone = pytz.timezone(timezone)
+
+    new_date_list = list(map(lambda x: x.astimezone(new_timezone),new_date_list))
+
+    new_hour_list = []
+    new_minute_list = []
+    new_time_list = []
+
+    new_hour_list = list(map(lambda x: add_zero(x.hour), new_date_list))
+    new_minute_list = list(map(lambda x: add_zero(x.minute), new_date_list))
+
+    for i in range(length):
+
+        new_time_list.append('{}:{}'.format(new_hour_list[i], new_minute_list[i]))
+
+    return new_time_list
