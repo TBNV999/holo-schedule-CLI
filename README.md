@@ -4,12 +4,13 @@ Hololive schedule scraping tool
 # Requirement
 - Python 3.x
 - requests
+- pytz (If you change the timezone)
 
 - Japanese font (In order to display hololive member's name)
 
 # Usage
 By executing main\.py You can get information like these:
-- The time hololive member's streaming will start in JST
+- The time hololive member's streaming will start
 - Who is streaming
 - The streaming URL
 

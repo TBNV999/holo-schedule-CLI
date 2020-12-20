@@ -4,6 +4,7 @@
 # Requirement
 - Python 3.x
 - requests
+- pytz (JST以外のタイムゾーンを使う場合)
 
 
 # Usage
