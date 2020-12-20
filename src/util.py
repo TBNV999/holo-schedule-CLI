@@ -255,7 +255,12 @@ def timezone_convert(time_list, timezone):
 
         new_date_list.append(dt.datetime(year, month, day, hour_list[i], minute_list[i]))
 
-    new_timezone = pytz.timezone(timezone)
+    try:
+        new_timezone = pytz.timezone(timezone)
+
+    except:
+        print('Invalid timezone')
+        sys.exit()
 
     new_date_list = list(map(lambda x: x.astimezone(new_timezone),new_date_list))
 
