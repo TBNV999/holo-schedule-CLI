@@ -22,7 +22,7 @@ main\.pyを実行することで、このような情報が得られます
 配信ではなく動画の場合、投稿後にリストに載り、その投稿時刻が配信時刻として表示されます。プレミアムは配信として表示されます。  
 
 # タイムゾーン
-タイムゾーンを/text/timezoneから設定すろことができます。[ここ]("https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568")から有効なタイムゾーンを確認してください。
+タイムゾーンを/text/timezoneから設定すろことができます。[ここ](https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568)から有効なタイムゾーンを確認してください。
 
 # Screenshot
 ![sc](https://user-images.githubusercontent.com/42367122/79976625-e26f4700-84d7-11ea-9e36-e5262e317fbd.png)  

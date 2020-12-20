@@ -23,7 +23,7 @@ Now this program is available to use options. For example, you can change hololi
 A moive will be on schedule after it is posted. The displayed time is its published time except premire moive. 
 
 # Timezone
-You can choose other timezone if you install pytz from pip. If you want to change, edit text/timezone. Check the available timezones [Here]("https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568")  
+You can choose other timezone if you install pytz from pip. If you want to change, edit text/timezone. Check the available timezones [Here](https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568)  
 
 # Screenshot
 ![sc](https://user-images.githubusercontent.com/42367122/79976625-e26f4700-84d7-11ea-9e36-e5262e317fbd.png)  
