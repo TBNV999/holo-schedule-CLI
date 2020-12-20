@@ -10,6 +10,7 @@ from src.util import *
 
 def main(options):
 
+    timezone = check_timezone()
 
     #Check options
     if options is None:
@@ -24,9 +25,12 @@ def main(options):
     #Fetch html file from https://schedule.hololive.tv/simple
     source_html = fetch_source_html(tomorrow_flag)
     time_list, stream_members_list, stream_url_list = scraping(source_html, all_flag)
+    
+    if timezone != "Asia/Tokyo":
+       time_list = timezone_convert(time_list, timezone)
 
     if eng_flag:
-        show_in_english(time_list, stream_members_list, stream_url_list)
+        show_in_english(time_list, stream_members_list, stream_url_list, timezone)
         sys.exit()
 
         
@@ -36,7 +40,7 @@ def main(options):
     stream_members_list = replace_name(stream_members_list, lists_length)
 
     # Show in Japanese
-    print('Index   Time(JST)  Member              Streaming URL')
+    print('Index   Time       Member              Streaming URL  ({})'.format(timezone))
 
 
     for i in range(lists_length):
