@@ -276,3 +276,31 @@ def timezone_convert(time_list, timezone):
         new_time_list.append('{}:{}'.format(new_hour_list[i], new_minute_list[i]))
 
     return new_time_list
+
+
+def check_shift(hour_list):
+
+    length = len(hour_list)
+    today = 256
+    tomorrow = 256
+
+    for i in range(length):
+        
+        try:
+            
+            tmp = i + 1
+
+            if hour_list[i] > hour_list[tmp]:
+
+                if len(hour_list[:i]) < len(hour_list[i:]):
+                    today = i
+                    break
+
+                else:
+                    tomorrow = i
+                    break
+
+        except IndexError:
+            break
+
+    return (today, tomorrow)
