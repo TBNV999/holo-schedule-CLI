@@ -38,12 +38,39 @@ def main(options):
     lists_length = len(time_list)
 
     stream_members_list = replace_name(stream_members_list, lists_length)
+    hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
+
+    if hour_list != sorted(hour_list):
+        date_shift = True
+        shift_index = check_shift(hour_list)
+
+    else:
+        date_shift = False
+        shift_index = (256, 256)
 
     # Show in Japanese
     print('Index   Time       Member              Streaming URL  ({})'.format(timezone))
 
 
     for i in range(lists_length):
+
+        if date_shift:
+
+            if shift_index[0] == i - 1:
+
+                if tomorrow_flag:
+                    print('\nTomorrow\n')
+
+                else:
+                    print('\nToday\n')
+
+            if shift_index[1] == i - 1:
+
+                if tomorrow_flag:
+                    print('\The day after tomorrow\n')
+
+                else:
+                    print('\nTomorrow\n')
 
         if i < 9:
             space = ' '
