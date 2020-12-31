@@ -40,6 +40,7 @@ def main(options):
     stream_members_list = replace_name(stream_members_list, lists_length)
     hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
 
+    #Check if date is shifted
     if hour_list != sorted(hour_list):
         date_shift = True
         shift_index = check_shift(hour_list)

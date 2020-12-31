@@ -284,23 +284,18 @@ def check_shift(hour_list):
     today = 256
     tomorrow = 256
 
-    for i in range(length):
+    for i in range(length - 1):
         
-        try:
-            
-            tmp = i + 1
+        tmp = i + 1
 
-            if hour_list[i] > hour_list[tmp]:
+        if hour_list[i] > hour_list[tmp]:
 
-                if len(hour_list[:i]) < len(hour_list[i:]):
-                    today = i
-                    break
+            if len(hour_list[:i]) < len(hour_list[i:]):
+                today = i
+                break
 
-                else:
-                    tomorrow = i
-                    break
-
-        except IndexError:
-            break
+            else:
+                tomorrow = i
+                break
 
     return (today, tomorrow)
