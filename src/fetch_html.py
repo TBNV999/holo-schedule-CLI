@@ -60,11 +60,11 @@ def fetch_source_html(is_tomorrow):
         req = requests.get(SOURCE_URL, headers=HEADER, timeout=3)
 
     except Exception:
-        print("Connection timeout")
+        print('Connection timeout')
         sys.exit()
 
     if req.status_code != 200:
-        print("An error occured!")
+        print('An error occured!')
         sys.exit()
 
     text_list = remove_text(req.text, date)

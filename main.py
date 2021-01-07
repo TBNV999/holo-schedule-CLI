@@ -26,7 +26,7 @@ def main(options):
     source_html = fetch_source_html(tomorrow_flag)
     time_list, stream_members_list, stream_url_list = scraping(source_html, all_flag)
     
-    if timezone != "Asia/Tokyo":
+    if timezone != 'Asia/Tokyo':
        time_list = timezone_convert(time_list, timezone)
 
     if eng_flag:
@@ -103,7 +103,7 @@ if __name__ == '__main__':
             argv = set(eval_argv(argv))
 
         except TypeError:
-            print("Invalid argument")
+            print('Invalid argument')
             sys.exit()
 
         # If inputed option is invalid eval_argv returns None
