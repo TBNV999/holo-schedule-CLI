@@ -1,6 +1,9 @@
 import datetime as dt
 import os
 import sys
+import unicodedata
+
+import requests
 
 
 #Global
@@ -43,13 +46,13 @@ def get_index_list(stream_members_list):
 
 def eval_argv(argv):
 
-    valid_options_list = {'--help', '--eng', '--date', '--tomorrow', '--all'}
+    valid_options_list = {'--help', '--eng', '--date', '--tomorrow', '--all', '--title'}
 
     #Options that is not available with other options
     special_options = {'--help', '--date'}
 
     #Options that is available to use other non special option at the same time
-    non_special_options = {'--eng', '--tomorrow', '--all'}
+    non_special_options = {'--eng', '--tomorrow', '--all', 'title'}
 
     s_flag = 0
     n_flag = False
@@ -147,6 +150,7 @@ def option_check(options):
     eng_flag = False
     tomorrow_flag = False
     all_flag = False
+    title_flag = False
 
     if '--help' in options:
         show_help()
@@ -165,7 +169,10 @@ def option_check(options):
     if '--all' in options:
         all_flag = True
 
-    return (eng_flag, tomorrow_flag, all_flag)
+    if '--title' in options:
+        title_flag = True
+
+    return (eng_flag, tomorrow_flag, all_flag, title_flag)
         
 
 def replace_name(members_list, length):
@@ -202,29 +209,6 @@ def show_help():
 
         for line in l:
             print(line)
-
-
-#Show the schedule list in English
-def show_in_english(time_list, stream_members_list, stream_url_list, timezone):
-
-    en_members_list = get_en_list()
-    index_list = get_index_list(stream_members_list)
-
-    print('Index   Time       Member             Streaming URL   ({})'.format(timezone))
-
-    #All three lists have the same length
-    lists_length = len(time_list)
-
-    for i in range(lists_length):
-
-        if i < 10:
-            space = ' '
-
-        else:
-            space = ''
-
-        m_space = ' ' * ( (-1 * len(en_members_list[index_list[i]]) ) + 17)
-        print('{}{}      {}~     {}{}  {}'.format(i, space, time_list[i], en_members_list[index_list[i]], m_space, stream_url_list[i]))
 
 
 def timezone_convert(time_list, timezone):
@@ -276,6 +260,29 @@ def timezone_convert(time_list, timezone):
         new_time_list.append('{}:{}'.format(new_hour_list[i], new_minute_list[i]))
 
     return new_time_list
+
+
+def fetch_title(stream_url_list):
+
+    title_list = []
+
+    for i in stream_url_list:
+
+        tmp = requests.get("https://www.youtube.com/oembed?url={}&format=json".format(i))
+        title = str(eval(tmp.text)["title"])
+
+        try:
+
+            if unicodedata.east_asian_width(title[0]) != 'W':
+                title = ' ' + title
+
+            title_list.append(title)
+
+        except UnicodeEncodeError:
+
+            title_list.append('*Error*')
+
+    return title_list
 
 
 def check_shift(hour_list):

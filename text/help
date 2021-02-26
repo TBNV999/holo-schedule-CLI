@@ -11,6 +11,8 @@ Options:
 
 --all       Show all available live streaming schedule including holostars, etc.
 
+--title     Show schedule with the titles of the streams
+
 Notes: You cannot use --help or --date with other options.
        But it is available to use --eng, --tomorrow or --all at the same time.
 

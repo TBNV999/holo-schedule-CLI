@@ -10,9 +10,10 @@ Hololive schedule scraping tool
 
 # Usage
 By executing main\.py You can get information like these:
-- The time hololive member's streaming will start
+- Start time of the stream
 - Who is streaming
-- The streaming URL
+- Streaming URL
+- Title of stream (optional)
 
 # Notes
 This program is a scraping tool. [The source page](https://schedule.hololive.tv/simple) 

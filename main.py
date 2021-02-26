@@ -18,9 +18,10 @@ def main(options):
         eng_flag = False
         tomorrow_flag = False
         all_flag = False
+        title_flag = False
 
     else:
-        eng_flag, tomorrow_flag, all_flag = option_check(options)
+        eng_flag, tomorrow_flag, all_flag, title_flag = option_check(options)
 
     #Fetch html file from https://schedule.hololive.tv/simple
     source_html = fetch_source_html(tomorrow_flag)
@@ -29,9 +30,9 @@ def main(options):
     if timezone != 'Asia/Tokyo':
        time_list = timezone_convert(time_list, timezone)
 
-    if eng_flag:
-        show_in_english(time_list, stream_members_list, stream_url_list, timezone)
-        sys.exit()
+    #if eng_flag:
+    #    show_in_english(time_list, stream_members_list, stream_url_list, timezone)
+    #    sys.exit()
 
         
     #All three lists have the same length
@@ -48,12 +49,23 @@ def main(options):
     else:
         date_shift = False
         shift_index = (256, 256)
+    
+    title_list = []
 
-    # Show in Japanese
-    print('Index   Time       Member              Streaming URL  ({})'.format(timezone))
+    if title_flag:
+        title_list = fetch_title(stream_url_list)
+
+    #Convert member's name into English
+    if eng_flag:
+        en_members_list = get_en_list()
+        index_list = get_index_list(stream_members_list)
+
+        stream_members_list = [en_members_list[index_list[i]] for i in range(lists_length)]
+
+    print('     Time      Member            Streaming URL          ({})'.format(timezone))
 
 
-    for i in range(lists_length):
+    for i in range(lists_length): 
 
         if date_shift:
 
@@ -87,7 +99,13 @@ def main(options):
         else:
             m_space = ' ' * ( (-1 * len(stream_members_list[i]) ) + 18)
 
-        print('{}{}      {}~     {}{}  {}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
+        #With titles of streams
+        if title_flag:
+            print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i], title_list[i]))
+
+        else:
+            print('{}{}   {}~    {}{}{}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
+
 
 
 if __name__ == '__main__':
