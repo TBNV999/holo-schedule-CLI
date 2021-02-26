@@ -30,11 +30,7 @@ def main(options):
     if timezone != 'Asia/Tokyo':
        time_list = timezone_convert(time_list, timezone)
 
-    #if eng_flag:
-    #    show_in_english(time_list, stream_members_list, stream_url_list, timezone)
-    #    sys.exit()
 
-        
     #All three lists have the same length
     lists_length = len(time_list)
 

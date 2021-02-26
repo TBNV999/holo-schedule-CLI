@@ -268,8 +268,8 @@ def fetch_title(stream_url_list):
 
     for i in stream_url_list:
 
-        tmp = requests.get("https://www.youtube.com/oembed?url={}&format=json".format(i))
-        title = str(eval(tmp.text)["title"])
+        tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(i))
+        title = str(eval(tmp.text)['title'])
 
         try:
 
