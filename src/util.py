@@ -271,16 +271,11 @@ def fetch_title(stream_url_list):
         tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(i))
         title = str(eval(tmp.text)['title'])
 
-        try:
 
-            if unicodedata.east_asian_width(title[0]) != 'W':
-                title = ' ' + title
+        if unicodedata.east_asian_width(title[0]) != 'W':
+            title = ' ' + title
 
-            title_list.append(title)
-
-        except UnicodeEncodeError:
-
-            title_list.append('*Error*')
+        title_list.append(title)
 
     return title_list
 

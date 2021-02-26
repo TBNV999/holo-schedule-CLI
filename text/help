@@ -14,7 +14,7 @@ Options:
 --title     Show schedule with the titles of the streams
 
 Notes: You cannot use --help or --date with other options.
-       But it is available to use --eng, --tomorrow or --all at the same time.
+       But it is available to use the other options at the same time.
 
 LICENSE: GNU General Public License v3.0
 

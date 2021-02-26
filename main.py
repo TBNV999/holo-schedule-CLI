@@ -97,7 +97,12 @@ def main(options):
 
         #With titles of streams
         if title_flag:
-            print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i], title_list[i]))
+
+            try:
+                print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i], title_list[i]))
+
+            except UnicodeEncodeError:
+                print('{}{}   {}~    {}{}{}  *Error*'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i])) 
 
         else:
             print('{}{}   {}~    {}{}{}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
