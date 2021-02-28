@@ -22,6 +22,29 @@ def add_zero(num):
     return str_num
 
 
+def check_shift(hour_list):
+
+    length = len(hour_list)
+    today = 256
+    tomorrow = 256
+
+    for i in range(length - 1):
+        
+        tmp = i + 1
+
+        if hour_list[i] > hour_list[tmp]:
+
+            if len(hour_list[:i]) < len(hour_list[i:]):
+                today = i
+                break
+
+            else:
+                tomorrow = i
+                break
+
+    return (today, tomorrow)
+
+
 def check_timezone():
 
     TIMEZONE_PATH = 'text/timezone'
@@ -73,6 +96,24 @@ def eval_argv(argv):
             return None
 
     return argv
+
+
+def fetch_title(stream_url_list):
+
+    title_list = []
+
+    for i in stream_url_list:
+
+        tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(i))
+        title = str(eval(tmp.text)['title'])
+
+
+        if unicodedata.east_asian_width(title[0]) != 'W':
+            title = ' ' + title
+
+        title_list.append(title)
+
+    return title_list
 
 
 def get_en_list():
@@ -260,44 +301,3 @@ def timezone_convert(time_list, timezone):
         new_time_list.append('{}:{}'.format(new_hour_list[i], new_minute_list[i]))
 
     return new_time_list
-
-
-def fetch_title(stream_url_list):
-
-    title_list = []
-
-    for i in stream_url_list:
-
-        tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(i))
-        title = str(eval(tmp.text)['title'])
-
-
-        if unicodedata.east_asian_width(title[0]) != 'W':
-            title = ' ' + title
-
-        title_list.append(title)
-
-    return title_list
-
-
-def check_shift(hour_list):
-
-    length = len(hour_list)
-    today = 256
-    tomorrow = 256
-
-    for i in range(length - 1):
-        
-        tmp = i + 1
-
-        if hour_list[i] > hour_list[tmp]:
-
-            if len(hour_list[:i]) < len(hour_list[i:]):
-                today = i
-                break
-
-            else:
-                tomorrow = i
-                break
-
-    return (today, tomorrow)
