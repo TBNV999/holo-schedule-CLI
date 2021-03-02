@@ -3,6 +3,8 @@ import os
 import sys
 import unicodedata
 
+from contextlib import redirect_stdout
+
 import requests
 
 
@@ -215,6 +217,23 @@ def option_check(options):
 
     return (eng_flag, tomorrow_flag, all_flag, title_flag)
         
+
+def remove_emoji(title):
+    
+    #Redirect to null in order not display 
+    with redirect_stdout(open(os.devnull, 'w')):
+        tmp = []
+        for i in list(title):
+            try:
+                print(i)
+                tmp.append(i)
+            except UnicodeEncodeError:
+                pass
+    title = ''.join(tmp)
+    if len(title) == 0:
+        title.append(' ')
+    return title
+    
 
 def replace_name(members_list, length):
 

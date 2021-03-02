@@ -101,8 +101,10 @@ def main(options):
             try:
                 print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i], title_list[i]))
 
+            #Some emoji cause this error
             except UnicodeEncodeError:
-                print('{}{}   {}~    {}{}{}  *Error*'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i])) 
+                title_list[i] = remove_emoji(title_list[i])
+                print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i], title_list[i])) 
 
         else:
             print('{}{}   {}~    {}{}{}'.format(i+1, space, time_list[i], stream_members_list[i], m_space, stream_url_list[i]))
