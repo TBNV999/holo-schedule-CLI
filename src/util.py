@@ -57,14 +57,12 @@ def check_timezone():
     return timezone
 
 
-def get_index_list(stream_members_list):
+def get_index_list(members_list):
 
-    JA_LIST = get_member_list()
-    index_list = []
-    length = len(stream_members_list)
+    JA_LIST = get_all_members_list()
+    length = len(members_list)
 
-    for i in range(length):
-        index_list.append(JA_LIST.index(stream_members_list[i]))
+    index_list = [JA_LIST.index(members_list[i]) for i in range(length)]
 
     return index_list
 
@@ -100,11 +98,11 @@ def eval_argv(argv):
     return argv
 
 
-def fetch_title(stream_url_list):
+def fetch_title(url_list):
 
     title_list = []
 
-    for i in stream_url_list:
+    for i in url_list:
 
         tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(i))
         title = str(eval(tmp.text)['title'])
@@ -133,19 +131,19 @@ def get_en_list():
     return tuple(en_list)
 
 
-def get_member_list():
+def get_all_members_list():
 
     MEMBER_FILE_PATH = 'text/hololive_members.txt'
 
     with open(MEMBER_FILE_PATH, 'r') as f:
 
         #Ignore the message of the first row
-        members_list = f.readlines()[1].split(',')
+        all_members_list = f.readlines()[1].split(',')
 
     #Delete break symbol
-    members_list[-1] = members_list[-1].replace('\n', '')
+    all_members_list[-1] = all_members_list[-1].replace('\n', '')
 
-    return members_list
+    return all_members_list
 
 
 def get_now_time():
@@ -235,15 +233,11 @@ def remove_emoji(title):
     return title
     
 
-def replace_name(members_list, length):
+def replace_name(member):
 
-    for i in range(length):
-        members_list[i] = members_list[i].replace('Sub','サブ')
-        members_list[i] = members_list[i].replace('Risu','Ayunda Risu')
-        members_list[i] = members_list[i].replace('Moona','Moona Hoshinova')
-        members_list[i] = members_list[i].replace('Iofi','Airani Iofiteen')
+    member = member.replace('Sub','サブ')
 
-    return members_list
+    return member
 
 def show_date():
 
@@ -310,13 +304,10 @@ def timezone_convert(time_list, timezone):
 
     new_hour_list = []
     new_minute_list = []
-    new_time_list = []
 
     new_hour_list = list(map(lambda x: add_zero(x.hour), new_date_list))
     new_minute_list = list(map(lambda x: add_zero(x.minute), new_date_list))
 
-    for i in range(length):
-
-        new_time_list.append('{}:{}'.format(new_hour_list[i], new_minute_list[i]))
+    new_time_list = ['{}:{}'.format(new_hour_list[i],new_minute_list[i]) for i in range(length)]
 
     return new_time_list
