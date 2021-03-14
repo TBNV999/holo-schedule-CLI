@@ -25,8 +25,8 @@ main\.pyを実行することで、このような情報が得られます
 
 タイトルの中の一部の絵文字は自動的に削除されます。
 
-# タイムゾーン
-タイムゾーンを/text/timezoneから設定すろことができます。[ここ](https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568)から有効なタイムゾーンを確認してください。
+# Timezone
+タイムゾーンを/text/timezoneから設定することができます。[ここ](https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568)から有効なタイムゾーンを確認してください。
 
 # Screenshot
-![sc](https://user-images.githubusercontent.com/42367122/79976625-e26f4700-84d7-11ea-9e36-e5262e317fbd.png)  
+![Screenshot](https://user-images.githubusercontent.com/42367122/111053945-9d675100-84ab-11eb-8744-adcb6354d637.png) 
