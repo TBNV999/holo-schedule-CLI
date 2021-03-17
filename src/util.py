@@ -62,7 +62,7 @@ def get_index_list(members_list):
     JA_LIST = get_all_members_list()
     length = len(members_list)
 
-    index_list = [JA_LIST.index(members_list[i]) for i in range(length)]
+    index_list = tuple([JA_LIST.index(members_list[i]) for i in range(length)])
 
     return index_list
 
@@ -299,14 +299,14 @@ def timezone_convert(time_list, timezone):
         print('Invalid timezone')
         sys.exit()
 
-    new_date_list = list(map(lambda x: x.astimezone(new_timezone),new_date_list))
+    new_date_list = tuple(map(lambda x: x.astimezone(new_timezone),new_date_list))
 
     new_hour_list = []
     new_minute_list = []
 
-    new_hour_list = list(map(lambda x: add_zero(x.hour), new_date_list))
-    new_minute_list = list(map(lambda x: add_zero(x.minute), new_date_list))
+    new_hour_list = tuple(map(lambda x: add_zero(x.hour), new_date_list))
+    new_minute_list = tuple(map(lambda x: add_zero(x.minute), new_date_list))
 
-    new_time_list = ['{}:{}'.format(new_hour_list[i],new_minute_list[i]) for i in range(length)]
+    new_time_list = tuple(['{}:{}'.format(new_hour_list[i],new_minute_list[i]) for i in range(length)])
 
     return new_time_list
