@@ -10,19 +10,18 @@ import requests
 def remove_text(text, date):
 
     text_list = text.split('\n')
+    remove_list = [' ', '\r']
 
     #Delete null element and escape charactors and space in text_list
-    text_list = tuple(map(lambda s: s.replace(' ', ''), text_list))
-    text_list = tuple(map(lambda s: s.replace('\r', ''), text_list))
-    text_list = tuple(map(lambda s: s.replace(' ', ''), text_list))
+    for element in remove_list:
+        text_list = tuple(map(lambda s: s.replace(element, ''),text_list))
 
     try:
         date_index = text_list.index(date)
     
     #Sometimes there is no streming on schedule
     except:
-        print('No streaming found')
-        sys.exit()
+        sys.exit('No streaming found')
 
 
     text_list = text_list[date_index:]
@@ -60,12 +59,10 @@ def fetch_source_html(is_tomorrow):
         req = requests.get(SOURCE_URL, headers=HEADER, timeout=3)
 
     except Exception:
-        print('Connection timeout')
-        sys.exit()
+        sys.exit('Connection timeout')
 
     if req.status_code != 200:
-        print('An error occured!')
-        sys.exit()
+        sys.exit('An error occured!')
 
     text_list = remove_text(req.text, date)
 

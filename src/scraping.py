@@ -22,17 +22,21 @@ def delete_exception(time_list, members_list, stream_url_list):
             members_list[i] = None
             stream_url_list[i] = None
 
-    time_list = [i for i in time_list if not i is None]
-    members_list = [i for i in members_list if not i is None]
-    stream_url_list = [i for i in stream_url_list if not i is None]
+    
+    remove_none = lambda x: [i for i in x if not i is None]
+    time_list = remove_none(time_list)
+    members_list = remove_none(members_list)
+    stream_url_list = remove_none(stream_url_list)
 
     return time_list, members_list, stream_url_list
 
 
 def form_url(url):
 
-    url = url.replace('"', '')
-    url = url.replace('href=', '')
+    remove_list = ['"', 'href=']
+
+    for element in remove_list:
+        url = url.replace(element, '')
 
     return url
 

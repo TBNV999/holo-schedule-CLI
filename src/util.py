@@ -102,9 +102,9 @@ def fetch_title(url_list):
 
     title_list = []
 
-    for i in url_list:
+    for url in url_list:
 
-        tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(i))
+        tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(url))
         title = str(eval(tmp.text)['title'])
 
         if unicodedata.east_asian_width(title[0]) != 'W':
@@ -257,7 +257,7 @@ def show_help():
         
         l = f.read().split('\n')
 
-        #Remove the message
+        #Remove the top message
         l.pop(0)
 
         for line in l:
@@ -296,8 +296,7 @@ def timezone_convert(time_list, timezone):
         new_timezone = pytz.timezone(timezone)
 
     except:
-        print('Invalid timezone')
-        sys.exit()
+        sys.exit('Invalid timezone')
 
     new_date_list = tuple(map(lambda x: x.astimezone(new_timezone),new_date_list))
 
