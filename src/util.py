@@ -103,14 +103,21 @@ def fetch_title(url_list):
     title_list = []
 
     for url in url_list:
+        
+        #Check if the stream url is YouTube url
+        if not "youtube" in url:
+            title_list.append("")
+            continue
 
-        tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(url))
-        title = str(eval(tmp.text)['title'])
+        else:
 
-        if unicodedata.east_asian_width(title[0]) != 'W':
-            title = ' ' + title
+            tmp = requests.get('https://www.youtube.com/oembed?url={}&format=json'.format(url))
+            title = str(eval(tmp.text)['title'])
 
-        title_list.append(title)
+            if unicodedata.east_asian_width(title[0]) != 'W':
+                title = ' ' + title
+
+            title_list.append(title)
 
     return title_list
 
