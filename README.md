@@ -32,3 +32,6 @@ You can choose other timezone if you install pytz from pip. If you want to chang
 # Screenshot
 ![Screenshot](https://user-images.githubusercontent.com/42367122/111053945-9d675100-84ab-11eb-8744-adcb6354d637.png)
 
+## License
+GPL-3
+
