@@ -56,7 +56,7 @@ def main(options):
         en_members_list = get_en_list()
         index_list = get_index_list(members_list)
 
-        members_list = [en_members_list[index_list[i]] for i in range(lists_length)]
+        members_list = [en_members_list[member] for member in index_list]
 
     print('     Time      Member            Streaming URL          ({})'.format(timezone))
 

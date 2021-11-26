@@ -60,9 +60,8 @@ def check_timezone():
 def get_index_list(members_list):
 
     JA_LIST = get_all_members_list()
-    length = len(members_list)
 
-    index_list = tuple([JA_LIST.index(members_list[i]) for i in range(length)])
+    index_list = tuple([JA_LIST.index(member.replace("サブ", "")) for member in members_list])
 
     return index_list
 
