@@ -1,4 +1,4 @@
-#Fetch the schedule of hololive live stream
+# Fetch the schedule of hololive live stream
 
 import sys
 import unicodedata
@@ -17,7 +17,7 @@ def main(args):
 
     timezone = check_timezone()
 
-    #Fetch html file from https://schedule.hololive.tv/simple
+    # Fetch html file from https://schedule.hololive.tv/simple
     source_html = fetch_source_html(args.tomorrow)
     time_list, members_list, url_list = scraping(source_html, args.all)
     
@@ -25,13 +25,13 @@ def main(args):
        time_list = timezone_convert(time_list, timezone)
 
 
-    #All three lists have the same length
+    # All three lists have the same length
     lists_length = len(time_list)
 
-    members_list = list(map(replace_name,members_list))
+    members_list = list(map(replace_name, members_list))
     hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
 
-    #Check if date is shifted
+    # Check if date is shifted
     if hour_list != sorted(hour_list):
         date_shift = True
         shift_index = check_shift(hour_list)
@@ -39,13 +39,13 @@ def main(args):
     else:
         date_shift = False
         shift_index = (256, 256)
-    
+
     title_list = []
 
     if args.title:
         title_list = fetch_title(url_list)
 
-    #Convert member's name into English
+    # Convert member's name into English
     if args.eng:
         en_members_list = get_en_list()
         index_list = get_index_list(members_list)
@@ -55,8 +55,8 @@ def main(args):
     print('     Time      Member            Streaming URL          ({})'.format(timezone))
 
 
-    for i, (time, member, url) in enumerate(zip(time_list,members_list,url_list)):
 
+    for i, (time, member, url) in enumerate(zip(time_list, members_list, url_list)):
 
         if date_shift:
 
@@ -82,21 +82,21 @@ def main(args):
         else:
             space = ''
 
-        #Check charactor type of member name
-        #Contain Japanese
+        # Check charactor type of member name
+        # Contain Japanese
         if unicodedata.east_asian_width(members_list[i][0]) == 'W':
             m_space = ' ' * ( (-2 * len(members_list[i]) + 18))
 
         else:
             m_space = ' ' * ( (-1 * len(members_list[i]) ) + 18)
 
-        #With titles of streams
+        # With titles of streams
         if args.title:
 
             try:
                 print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time, member, m_space, url, title_list[i]))
 
-            #Some emoji cause this error
+            # Some emoji cause this error
             except UnicodeEncodeError:
                 title_list[i] = remove_emoji(title_list[i])
                 print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time, member, m_space, url, title_list[i])) 

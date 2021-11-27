@@ -8,7 +8,7 @@ from contextlib import redirect_stdout
 import requests
 
 
-#Global
+# Global
 global OS_NAME 
 OS_NAME = os.name
     
@@ -62,8 +62,8 @@ def fetch_title(url_list):
     title_list = []
 
     for url in url_list:
-        
-        #Check if the stream url is YouTube url
+
+        # Check if the stream url is YouTube url
         if not "youtube" in url:
             title_list.append("")
             continue
@@ -91,10 +91,10 @@ def get_en_list():
 
     with open(EN_FILE_PATH, 'r') as f:
 
-        #Ignore the message of the first row
+        # Ignore the message of the first row
         en_list = f.readlines()[1].split(',')
 
-    #Delete break symbol
+    # Delete break symbol
     en_list[-1] = en_list[-1].replace('\n', '')
 
     return tuple(en_list)
@@ -106,10 +106,10 @@ def get_all_members_list():
 
     with open(MEMBER_FILE_PATH, 'r') as f:
 
-        #Ignore the message of the first row
+        # Ignore the message of the first row
         all_members_list = f.readlines()[1].split(',')
 
-    #Delete break symbol
+    # Delete break symbol
     all_members_list[-1] = all_members_list[-1].replace('\n', '')
 
     return all_members_list
@@ -117,7 +117,7 @@ def get_all_members_list():
 
 def get_now_time():
 
-    #Get the current time in JST(UTC+9)
+    # Get the current time in JST(UTC+9)
     now = dt.datetime.now(JST)
 
     month = now.month
@@ -128,7 +128,7 @@ def get_now_time():
 
 def get_tomorrow():
 
-    #Get the tomorrow date in JST
+    # Get the tomorrow date in JST
     tomorrow = dt.datetime.now(JST) + dt.timedelta(days=1)
 
     month = tomorrow.month
@@ -139,23 +139,23 @@ def get_tomorrow():
 
 def move_current_directory():
 
-    #Move to the directory that has main.py
-    #Change directory delimiter by OS
+    # Move to the directory that has main.py
+    # Change directory delimiter by OS
 
-    #Windows
+    # Windows
     if OS_NAME == 'nt':
         path = __file__.replace(r'\src\util.py', '')
         os.chdir(path)
 
-    #POSIX
+    # POSIX
     else:
         path = __file__.replace('/src/util.py', '')
         os.chdir(path)
-        
+
 
 def remove_emoji(title):
     
-    #Redirect to null in order not display 
+    # Redirect to null in order not display
     with redirect_stdout(open(os.devnull, 'w')):
         tmp = []
         for i in list(title):
@@ -168,13 +168,14 @@ def remove_emoji(title):
     if len(title) == 0:
         title.append(' ')
     return title
-    
+
 
 def replace_name(member):
 
     member = member.replace('Sub','サブ')
 
     return member
+
 
 def show_date():
 
