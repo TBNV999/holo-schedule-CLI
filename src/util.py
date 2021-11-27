@@ -39,6 +39,37 @@ def check_shift(hour_list):
     return (today, tomorrow)
 
 
+def filter_future(hour_list, index, shift_index=None, timezone="Asia/Tokyo", tomorrow=False):
+    # True if the timestamp is in the future (or started in the current hour)
+
+    if shift_index:
+        if shift_index[0] < 256:
+            # Non-default value
+            if index <= shift_index[0]:
+                if not tomorrow:
+                    # Yesterday!
+                    return False
+        if index > shift_index[1]:
+            # Tomorrow
+            return True
+    else:
+        if tomorrow:
+            return True
+
+    if timezone == "Asia/Tokyo":
+        tz = JST
+    else:
+        import pytz
+        try:
+            tz = pytz.timezone(timezone)
+        except:
+            sys.exit('Invalid timezone')
+
+    # Today
+    now = dt.datetime.now(tz)
+    return hour_list[index] >= now.hour
+
+
 def check_timezone():
 
     TIMEZONE_PATH = 'text/timezone'

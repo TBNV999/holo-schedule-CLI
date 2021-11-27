@@ -33,12 +33,10 @@ def main(args):
 
     # Check if date is shifted
     if hour_list != sorted(hour_list):
-        date_shift = True
         shift_index = check_shift(hour_list)
 
     else:
-        date_shift = False
-        shift_index = (256, 256)
+        shift_index = None
 
     title_list = []
 
@@ -58,7 +56,11 @@ def main(args):
 
     for i, (time, member, url) in enumerate(zip(time_list, members_list, url_list)):
 
-        if date_shift:
+        if args.future:
+            if not filter_future(hour_list, i, shift_index=shift_index, timezone=timezone, tomorrow=args.tomorrow):
+                continue
+
+        if shift_index:
 
             if shift_index[0] == i - 1:
 
@@ -146,6 +148,12 @@ Github: https://github.com/TeepaBlue/holo-schedule-CLI""",
         action="store_true",
         default=False,
         help="Show schedule with the titles of the streams",
+    )
+    parser.add_argument(
+        "--future",
+        action="store_true",
+        default=False,
+        help="Only show streams starting in the future",
     )
     args = parser.parse_args()
 
