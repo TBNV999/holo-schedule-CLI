@@ -57,37 +57,6 @@ def get_index_list(members_list):
     return index_list
 
 
-def eval_argv(argv):
-
-    valid_options_list = {'--help', '--eng', '--date', '--tomorrow', '--all', '--title'}
-
-    #Options that is not available with other options
-    special_options = {'--help', '--date'}
-
-    #Options that is available to use other non special option at the same time
-    non_special_options = {'--eng', '--tomorrow', '--all', 'title'}
-
-    s_flag = 0
-    n_flag = False
-
-    for option in argv:
-
-        if not option in valid_options_list:
-            return None
-
-        if option in special_options:
-            s_flag += 1 
-
-        if option in non_special_options:
-            n_flag = True
-
-        if s_flag and n_flag or s_flag > 1:
-
-            return None
-
-    return argv
-
-
 def fetch_title(url_list):
 
     title_list = []
@@ -182,36 +151,6 @@ def move_current_directory():
     else:
         path = __file__.replace('/src/util.py', '')
         os.chdir(path)
-
-
-def option_check(options):
-
-    eng_flag = False
-    tomorrow_flag = False
-    all_flag = False
-    title_flag = False
-
-    if '--help' in options:
-        show_help()
-        sys.exit()
-
-    if '--date' in options:
-        show_date()
-        sys.exit()
-
-    if '--eng' in options:
-        eng_flag = True
-
-    if '--tomorrow' in options:
-        tomorrow_flag = True
-
-    if '--all' in options:
-        all_flag = True
-
-    if '--title' in options:
-        title_flag = True
-
-    return (eng_flag, tomorrow_flag, all_flag, title_flag)
         
 
 def remove_emoji(title):
@@ -242,19 +181,6 @@ def show_date():
     now = dt.datetime.now(JST)
 
     print(now.strftime("%m/%d %H:%M (JST)"))
-
-
-def show_help():
-
-    with open('text/help', 'r') as f:
-        
-        l = f.read().split('\n')
-
-        #Remove the top message
-        l.pop(0)
-
-        for line in l:
-            print(line)
 
 
 def timezone_convert(time_list, timezone):
