@@ -11,17 +11,8 @@ import requests
 #Global
 global OS_NAME 
 OS_NAME = os.name
-
-
-def add_zero(num):
-
-    if num < 10:
-        str_num = '0' + str(num)
-
-    else:
-        str_num = str(num)
-
-    return str_num
+    
+JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
 
 
 def check_shift(hour_list):
@@ -158,7 +149,6 @@ def get_all_members_list():
 def get_now_time():
 
     #Get the current time in JST(UTC+9)
-    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
     now = dt.datetime.now(JST)
 
     month = now.month
@@ -170,8 +160,7 @@ def get_now_time():
 def get_tomorrow():
 
     #Get the tomorrow date in JST
-    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
-    tomorrow = dt.datetime.now() + dt.timedelta(days=1)
+    tomorrow = dt.datetime.now(JST) + dt.timedelta(days=1)
 
     month = tomorrow.month
     date = tomorrow.day
@@ -250,15 +239,9 @@ def replace_name(member):
 
 def show_date():
 
-    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
     now = dt.datetime.now(JST)
 
-    month = now.month
-    date = now.day
-    hours = add_zero(now.hour)
-    minutes = add_zero(now.minute)
-
-    print('{}/{} {}:{} (JST)'.format(month, date, hours, minutes))
+    print(now.strftime("%m/%d %H:%M (JST)"))
 
 
 def show_help():
@@ -279,14 +262,13 @@ def timezone_convert(time_list, timezone):
 
     new_date_list = []
 
-    JST = pytz.timezone('Asia/Tokyo')
     now = dt.datetime.now(JST)
     year = now.year
     month = now.month
     day = now.day
 
     new_date_list = [dt.datetime.strptime(t, '%H:%M').replace(year=year, month=month, day=day) for t in time_list]
-    new_date_list = list(map(lambda x: JST.localize(x), new_date_list))
+    new_date_list = list(map(lambda x: pytz.timezone("Asia/Tokyo").localize(x), new_date_list))
 
     try:
         new_timezone = pytz.timezone(timezone)

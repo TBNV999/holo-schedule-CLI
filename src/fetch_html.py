@@ -47,13 +47,13 @@ def fetch_source_html(is_tomorrow):
     HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
 
     if is_tomorrow:
-        month, date = get_tomorrow()
+        month, day = get_tomorrow()
 
     else:
-        month, date = get_now_time()
+        month, day = get_now_time()
 
     #Convert the time format to search source HTML 
-    date = '{}/{}'.format(add_zero(month), add_zero(date))
+    date = '{:02d}/{:02d}'.format(month, day)
 
     try:
         req = requests.get(SOURCE_URL, headers=HEADER, timeout=3)
