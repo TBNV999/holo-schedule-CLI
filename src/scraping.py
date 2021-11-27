@@ -1,4 +1,4 @@
-#Generate today's stream list from html
+# Generate today's stream list from html
 import re
 import time
 
@@ -7,7 +7,7 @@ from src.util import *
 import requests
 
 
-#Delete non-hololive stream
+# Delete non-hololive stream
 def delete_exception(time_list, members_list, stream_url_list):
 
     length = len(time_list)
@@ -21,7 +21,6 @@ def delete_exception(time_list, members_list, stream_url_list):
             members_list[i] = None
             stream_url_list[i] = None
 
-    
     remove_none = lambda x: [i for i in x if not i is None]
     time_list = remove_none(time_list)
     members_list = remove_none(members_list)
@@ -59,7 +58,7 @@ def scraping(source_html, is_all):
     if not is_all:
         time_list, members_list, stream_url_list = delete_exception(time_list, members_list, stream_url_list)
 
-    #Delete the noise data
+    # Delete the noise data
     stream_url_list = list(map(form_url, stream_url_list))
 
     return time_list, members_list, stream_url_list

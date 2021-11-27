@@ -1,74 +1,70 @@
-#Fetch the schedule of hololive live stream
+# Fetch the schedule of hololive live stream
 
 import sys
 import unicodedata
+import argparse
 
 from src.fetch_html import *
 from src.scraping import *
 from src.util import *
 
 
-def main(options):
+def main(args):
+
+    if args.date:
+        show_date()
+        sys.exit(0)
 
     timezone = check_timezone()
 
-    #Check options
-    if options is None:
-
-        eng_flag = False
-        tomorrow_flag = False
-        all_flag = False
-        title_flag = False
-
-    else:
-        eng_flag, tomorrow_flag, all_flag, title_flag = option_check(options)
-
-    #Fetch html file from https://schedule.hololive.tv/simple
-    source_html = fetch_source_html(tomorrow_flag)
-    time_list, members_list, url_list = scraping(source_html, all_flag)
+    # Fetch html file from https://schedule.hololive.tv/simple
+    source_html = fetch_source_html(args.tomorrow)
+    time_list, members_list, url_list = scraping(source_html, args.all)
     
     if timezone != 'Asia/Tokyo':
        time_list = timezone_convert(time_list, timezone)
 
 
-    #All three lists have the same length
+    # All three lists have the same length
     lists_length = len(time_list)
 
-    members_list = list(map(replace_name,members_list))
+    members_list = list(map(replace_name, members_list))
     hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
 
-    #Check if date is shifted
+    # Check if date is shifted
     if hour_list != sorted(hour_list):
-        date_shift = True
         shift_index = check_shift(hour_list)
 
     else:
-        date_shift = False
-        shift_index = (256, 256)
-    
+        shift_index = None
+
     title_list = []
 
-    if title_flag:
+    if args.title:
         title_list = fetch_title(url_list)
 
-    #Convert member's name into English
-    if eng_flag:
+    # Convert member's name into English
+    if args.eng:
         en_members_list = get_en_list()
         index_list = get_index_list(members_list)
 
-        members_list = [en_members_list[index_list[i]] for i in range(lists_length)]
+        members_list = [en_members_list[member] for member in index_list]
 
     print('     Time      Member            Streaming URL          ({})'.format(timezone))
 
 
-    for i, (time, member, url) in enumerate(zip(time_list,members_list,url_list)):
 
+    for i, (time, member, url) in enumerate(zip(time_list, members_list, url_list)):
 
-        if date_shift:
+        if args.future:
+            if not filter_future(hour_list, i, shift_index=shift_index, timezone=timezone, tomorrow=args.tomorrow):
+                continue
+
+        if shift_index:
 
             if shift_index[0] == i - 1:
 
-                if tomorrow_flag:
+                if args.tomorrow:
                     print('\nTomorrow\n')
 
                 else:
@@ -76,7 +72,7 @@ def main(options):
 
             if shift_index[1] == i - 1:
 
-                if tomorrow_flag:
+                if args.tomorrow:
                     print('\The day after tomorrow\n')
 
                 else:
@@ -88,21 +84,21 @@ def main(options):
         else:
             space = ''
 
-        #Check charactor type of member name
-        #Contain Japanese
+        # Check charactor type of member name
+        # Contain Japanese
         if unicodedata.east_asian_width(members_list[i][0]) == 'W':
             m_space = ' ' * ( (-2 * len(members_list[i]) + 18))
 
         else:
             m_space = ' ' * ( (-1 * len(members_list[i]) ) + 18)
 
-        #With titles of streams
-        if title_flag:
+        # With titles of streams
+        if args.title:
 
             try:
                 print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time, member, m_space, url, title_list[i]))
 
-            #Some emoji cause this error
+            # Some emoji cause this error
             except UnicodeEncodeError:
                 title_list[i] = remove_emoji(title_list[i])
                 print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time, member, m_space, url, title_list[i])) 
@@ -114,28 +110,51 @@ def main(options):
 
 if __name__ == '__main__':
 
-    argv = sys.argv
-
     move_current_directory()
 
-    if len(argv) > 1:
-        argv.pop(0)
+    parser = argparse.ArgumentParser(
+        description="Hololive schedule scraping tool",
+        formatter_class=argparse.RawTextHelpFormatter,
+        epilog="""Notes: You cannot use --date with other options.
+       But it is available to use the other options at the same time.
 
-        try:
-            argv = set(eval_argv(argv))
+LICENSE: GNU General Public License v3.0
 
-        except TypeError:
-            print('Invalid argument')
-            sys.exit()
+Github: https://github.com/TeepaBlue/holo-schedule-CLI""",
+    )
+    parser.add_argument(
+        "--eng",
+        action="store_true",
+        default=False,
+        help="Make displayed hololive member's name English",
+    )
+    parser.add_argument(
+        "--date", action="store_true", default=False, help="Get the current time in JST"
+    )
+    parser.add_argument(
+        "--tomorrow",
+        action="store_true",
+        default=False,
+        help="Show tomorrow's schedule list",
+    )
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        default=False,
+        help="Show all available live streaming schedule including holostars, etc.",
+    )
+    parser.add_argument(
+        "--title",
+        action="store_true",
+        default=False,
+        help="Show schedule with the titles of the streams",
+    )
+    parser.add_argument(
+        "--future",
+        action="store_true",
+        default=False,
+        help="Only show streams starting in the future",
+    )
+    args = parser.parse_args()
 
-        # If inputed option is invalid eval_argv returns None
-        if argv is None:
-            print('Error: invalid options. Execute with --help to check about options')
-            sys.exit()
-
-        else:
-            main(argv)
-
-    #No option
-    else:
-        main(None)
+    main(args)

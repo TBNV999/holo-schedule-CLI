@@ -2,26 +2,18 @@ import datetime as dt
 import os
 import sys
 import unicodedata
+import pathlib
 
 from contextlib import redirect_stdout
 
 import requests
 
 
-#Global
+# Global
 global OS_NAME 
 OS_NAME = os.name
-
-
-def add_zero(num):
-
-    if num < 10:
-        str_num = '0' + str(num)
-
-    else:
-        str_num = str(num)
-
-    return str_num
+    
+JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
 
 
 def check_shift(hour_list):
@@ -47,6 +39,37 @@ def check_shift(hour_list):
     return (today, tomorrow)
 
 
+def filter_future(hour_list, index, shift_index=None, timezone="Asia/Tokyo", tomorrow=False):
+    # True if the timestamp is in the future (or started in the current hour)
+
+    if shift_index:
+        if shift_index[0] < 256:
+            # Non-default value
+            if index <= shift_index[0]:
+                if not tomorrow:
+                    # Yesterday!
+                    return False
+        if index > shift_index[1]:
+            # Tomorrow
+            return True
+    else:
+        if tomorrow:
+            return True
+
+    if timezone == "Asia/Tokyo":
+        tz = JST
+    else:
+        import pytz
+        try:
+            tz = pytz.timezone(timezone)
+        except:
+            sys.exit('Invalid timezone')
+
+    # Today
+    now = dt.datetime.now(tz)
+    return hour_list[index] >= now.hour
+
+
 def check_timezone():
 
     TIMEZONE_PATH = 'text/timezone'
@@ -60,42 +83,10 @@ def check_timezone():
 def get_index_list(members_list):
 
     JA_LIST = get_all_members_list()
-    length = len(members_list)
 
-    index_list = tuple([JA_LIST.index(members_list[i]) for i in range(length)])
+    index_list = tuple([JA_LIST.index(member.replace("サブ", "")) for member in members_list])
 
     return index_list
-
-
-def eval_argv(argv):
-
-    valid_options_list = {'--help', '--eng', '--date', '--tomorrow', '--all', '--title'}
-
-    #Options that is not available with other options
-    special_options = {'--help', '--date'}
-
-    #Options that is available to use other non special option at the same time
-    non_special_options = {'--eng', '--tomorrow', '--all', 'title'}
-
-    s_flag = 0
-    n_flag = False
-
-    for option in argv:
-
-        if not option in valid_options_list:
-            return None
-
-        if option in special_options:
-            s_flag += 1 
-
-        if option in non_special_options:
-            n_flag = True
-
-        if s_flag and n_flag or s_flag > 1:
-
-            return None
-
-    return argv
 
 
 def fetch_title(url_list):
@@ -103,8 +94,8 @@ def fetch_title(url_list):
     title_list = []
 
     for url in url_list:
-        
-        #Check if the stream url is YouTube url
+
+        # Check if the stream url is YouTube url
         if not "youtube" in url:
             title_list.append("")
             continue
@@ -132,10 +123,10 @@ def get_en_list():
 
     with open(EN_FILE_PATH, 'r') as f:
 
-        #Ignore the message of the first row
+        # Ignore the message of the first row
         en_list = f.readlines()[1].split(',')
 
-    #Delete break symbol
+    # Delete break symbol
     en_list[-1] = en_list[-1].replace('\n', '')
 
     return tuple(en_list)
@@ -147,10 +138,10 @@ def get_all_members_list():
 
     with open(MEMBER_FILE_PATH, 'r') as f:
 
-        #Ignore the message of the first row
+        # Ignore the message of the first row
         all_members_list = f.readlines()[1].split(',')
 
-    #Delete break symbol
+    # Delete break symbol
     all_members_list[-1] = all_members_list[-1].replace('\n', '')
 
     return all_members_list
@@ -158,8 +149,7 @@ def get_all_members_list():
 
 def get_now_time():
 
-    #Get the current time in JST(UTC+9)
-    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
+    # Get the current time in JST(UTC+9)
     now = dt.datetime.now(JST)
 
     month = now.month
@@ -170,9 +160,8 @@ def get_now_time():
 
 def get_tomorrow():
 
-    #Get the tomorrow date in JST
-    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
-    tomorrow = dt.datetime.now() + dt.timedelta(days=1)
+    # Get the tomorrow date in JST
+    tomorrow = dt.datetime.now(JST) + dt.timedelta(days=1)
 
     month = tomorrow.month
     date = tomorrow.day
@@ -182,53 +171,16 @@ def get_tomorrow():
 
 def move_current_directory():
 
-    #Move to the directory that has main.py
-    #Change directory delimiter by OS
+    # Move to the directory that has main.py
+    # Change directory delimiter by OS
 
-    #Windows
-    if OS_NAME == 'nt':
-        path = __file__.replace(r'\src\util.py', '')
-        os.chdir(path)
+    path = pathlib.Path(os.path.dirname(__file__)).parent
+    os.chdir(path)
 
-    #POSIX
-    else:
-        path = __file__.replace('/src/util.py', '')
-        os.chdir(path)
-
-
-def option_check(options):
-
-    eng_flag = False
-    tomorrow_flag = False
-    all_flag = False
-    title_flag = False
-
-    if '--help' in options:
-        show_help()
-        sys.exit()
-
-    if '--date' in options:
-        show_date()
-        sys.exit()
-
-    if '--eng' in options:
-        eng_flag = True
-
-    if '--tomorrow' in options:
-        tomorrow_flag = True
-
-    if '--all' in options:
-        all_flag = True
-
-    if '--title' in options:
-        title_flag = True
-
-    return (eng_flag, tomorrow_flag, all_flag, title_flag)
-        
 
 def remove_emoji(title):
     
-    #Redirect to null in order not display 
+    # Redirect to null in order not display
     with redirect_stdout(open(os.devnull, 'w')):
         tmp = []
         for i in list(title):
@@ -241,7 +193,7 @@ def remove_emoji(title):
     if len(title) == 0:
         title.append(' ')
     return title
-    
+
 
 def replace_name(member):
 
@@ -249,74 +201,33 @@ def replace_name(member):
 
     return member
 
+
 def show_date():
 
-    JST = dt.timezone(dt.timedelta(hours=+9), 'JST')
     now = dt.datetime.now(JST)
 
-    month = now.month
-    date = now.day
-    hours = add_zero(now.hour)
-    minutes = add_zero(now.minute)
-
-    print('{}/{} {}:{} (JST)'.format(month, date, hours, minutes))
-
-
-def show_help():
-
-    with open('text/help', 'r') as f:
-        
-        l = f.read().split('\n')
-
-        #Remove the top message
-        l.pop(0)
-
-        for line in l:
-            print(line)
+    print(now.strftime("%m/%d %H:%M (JST)"))
 
 
 def timezone_convert(time_list, timezone):
-
     import pytz
 
     new_date_list = []
-    hour_list = []
-    minute_list = []
 
-    length = len(time_list)
-
-    for i in range(length):
-        
-        tmp = time_list[i].split(':')
-        hour_list.append(int(tmp[0]))
-        minute_list.append(int(tmp[1]))
-        
-    now = dt.datetime.now()
+    now = dt.datetime.now(JST)
     year = now.year
     month = now.month
     day = now.day
-    JST = pytz.timezone('Asia/Tokyo')
 
-    new_date_list = list(map(lambda x: JST.localize(x), new_date_list))
-
-    for i in range(length):
-
-        new_date_list.append(dt.datetime(year, month, day, hour_list[i], minute_list[i]))
+    new_date_list = [dt.datetime.strptime(t, '%H:%M').replace(year=year, month=month, day=day) for t in time_list]
+    new_date_list = list(map(lambda x: pytz.timezone("Asia/Tokyo").localize(x), new_date_list))
 
     try:
         new_timezone = pytz.timezone(timezone)
-
     except:
         sys.exit('Invalid timezone')
 
-    new_date_list = tuple(map(lambda x: x.astimezone(new_timezone),new_date_list))
-
-    new_hour_list = []
-    new_minute_list = []
-
-    new_hour_list = tuple(map(lambda x: add_zero(x.hour), new_date_list))
-    new_minute_list = tuple(map(lambda x: add_zero(x.minute), new_date_list))
-
-    new_time_list = tuple(['{}:{}'.format(new_hour_list[i],new_minute_list[i]) for i in range(length)])
+    new_date_list = tuple(map(lambda x: x.astimezone(new_timezone), new_date_list))
+    new_time_list = tuple([d.strftime("%H:%M") for d in new_date_list])
 
     return new_time_list
