@@ -2,6 +2,7 @@ import datetime as dt
 import os
 import sys
 import unicodedata
+import pathlib
 
 from contextlib import redirect_stdout
 
@@ -142,15 +143,8 @@ def move_current_directory():
     # Move to the directory that has main.py
     # Change directory delimiter by OS
 
-    # Windows
-    if OS_NAME == 'nt':
-        path = __file__.replace(r'\src\util.py', '')
-        os.chdir(path)
-
-    # POSIX
-    else:
-        path = __file__.replace('/src/util.py', '')
-        os.chdir(path)
+    path = pathlib.Path(os.path.dirname(__file__)).parent
+    os.chdir(path)
 
 
 def remove_emoji(title):
