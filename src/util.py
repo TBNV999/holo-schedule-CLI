@@ -49,6 +49,10 @@ def filter_future(hour_list, index, shift_index=None, timezone="Asia/Tokyo", tom
                 if not tomorrow:
                     # Yesterday!
                     return False
+            else:
+                if tomorrow:
+                    # Tomorrow
+                    return True
         if index > shift_index[1]:
             # Tomorrow
             return True
