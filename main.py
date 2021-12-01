@@ -20,6 +20,12 @@ def main(args):
     # Fetch html file from https://schedule.hololive.tv/simple
     source_html = fetch_source_html(args.tomorrow)
     time_list, members_list, url_list = scraping(source_html, args.all)
+
+    if args.future:
+        hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
+        filter_map = filter_future(hour_list)
+    else:
+        filter_map = [True] * len(time_list)
     
     if timezone != 'Asia/Tokyo':
        time_list = timezone_convert(time_list, timezone)
@@ -55,10 +61,8 @@ def main(args):
 
 
     for i, (time, member, url) in enumerate(zip(time_list, members_list, url_list)):
-
-        if args.future:
-            if not filter_future(hour_list, i, shift_index=shift_index, timezone=timezone, tomorrow=args.tomorrow):
-                continue
+        if not filter_map[i]:
+            continue
 
         if shift_index:
 
