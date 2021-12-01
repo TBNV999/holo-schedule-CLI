@@ -8,6 +8,7 @@ from src.fetch_html import *
 from src.scraping import *
 from src.util import *
 
+LABELS = ("Yesterday", "Today", "Tomorrow", "The day after tomorrow")
 
 def main(args):
 
@@ -21,14 +22,20 @@ def main(args):
     source_html = fetch_source_html(args.tomorrow)
     time_list, members_list, url_list = scraping(source_html, args.all)
 
-    if args.future:
+    if args.future and not args.tomorrow:
         hour_list = list(map(lambda x: int(x.split(':')[0]), time_list))
         filter_map = filter_future(hour_list)
     else:
         filter_map = [True] * len(time_list)
     
     if timezone != 'Asia/Tokyo':
-       time_list = timezone_convert(time_list, timezone)
+        time_list = timezone_convert(time_list, timezone)
+        date_delta = get_date_delta(timezone)
+    else:
+        date_delta = 0
+
+    if args.tomorrow:
+        date_delta += 1
 
 
     # All three lists have the same length
@@ -40,7 +47,6 @@ def main(args):
     # Check if date is shifted
     if hour_list != sorted(hour_list):
         shift_index = check_shift(hour_list)
-
     else:
         shift_index = None
 
@@ -65,22 +71,11 @@ def main(args):
             continue
 
         if shift_index:
-
             if shift_index[0] == i - 1:
-
-                if args.tomorrow:
-                    print('\nTomorrow\n')
-
-                else:
-                    print('\nToday\n')
+                print('\n' + LABELS[1+date_delta] + '\n')
 
             if shift_index[1] == i - 1:
-
-                if args.tomorrow:
-                    print('\The day after tomorrow\n')
-
-                else:
-                    print('\nTomorrow\n')
+                print('\n' + LABELS[2+date_delta] + '\n')
 
         if i < 9:
             space = ' '

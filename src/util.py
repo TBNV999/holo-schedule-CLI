@@ -134,6 +134,15 @@ def get_now_time():
 
     return (month, date)
 
+def get_date_delta(timezone):
+    now = dt.datetime.now(JST).date()
+    import pytz
+    try:
+        tz = pytz.timezone(timezone)
+    except:
+        sys.exit('Invalid timezone')
+    now_ = dt.datetime.now(tz).date()
+    return (now - now_).days
 
 def get_tomorrow():
 
