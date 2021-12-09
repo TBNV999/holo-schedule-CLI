@@ -77,12 +77,6 @@ def main(args):
             if shift_index[1] == i - 1:
                 print('\n' + LABELS[2+date_delta] + '\n')
 
-        if i < 9:
-            space = ' '
-
-        else:
-            space = ''
-
         # Check charactor type of member name
         # Contain Japanese
         if unicodedata.east_asian_width(members_list[i][0]) == 'W':
@@ -95,15 +89,15 @@ def main(args):
         if args.title:
 
             try:
-                print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time, member, m_space, url, title_list[i]))
+                print('{:2d}   {}~    {}{}{}  {}'.format(i+1, time, member, m_space, url, title_list[i]))
 
             # Some emoji cause this error
             except UnicodeEncodeError:
                 title_list[i] = remove_emoji(title_list[i])
-                print('{}{}   {}~    {}{}{}  {}'.format(i+1, space, time, member, m_space, url, title_list[i])) 
+                print('{:2d}   {}~    {}{}{}  {}'.format(i+1, time, member, m_space, url, title_list[i])) 
 
         else:
-            print('{}{}   {}~    {}{}{}'.format(i+1, space, time_list[i], members_list[i], m_space, url_list[i]))
+            print('{:2d}   {}~    {}{}{}'.format(i+1, time_list[i], members_list[i], m_space, url_list[i]))
 
 
 
