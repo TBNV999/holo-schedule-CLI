@@ -12,11 +12,11 @@ def delete_exception(time_list, members_list, stream_url_list):
 
     length = len(time_list)
 
-    EXCEPTION_LIST = set(get_all_members_list()[37:])
+    EXCEPTION_LIST = set(get_hololive_members())
 
     for i in range(length):
 
-        if members_list[i] in EXCEPTION_LIST:
+        if not members_list[i] in EXCEPTION_LIST:
             time_list[i] = None
             members_list[i] = None
             stream_url_list[i] = None

@@ -112,11 +112,14 @@ def get_en_list():
 def get_all_members_list():
 
     MEMBER_FILE_PATH = 'text/hololive_members.txt'
+    all_members_list = []
 
     with open(MEMBER_FILE_PATH, 'r') as f:
-
         # Ignore the message of the first row
-        all_members_list = f.readlines()[1].split(',')
+        file_content = f.readlines()[1:]
+
+    for member_block in file_content:
+        all_members_list.extend(member_block.split(','))
 
     # Delete break symbol
     all_members_list[-1] = all_members_list[-1].replace('\n', '')
@@ -143,6 +146,20 @@ def get_date_delta(timezone):
         sys.exit('Invalid timezone')
     now_ = dt.datetime.now(tz).date()
     return (now - now_).days
+
+def get_hololive_members():
+
+    MEMBER_FILE_PATH = 'text/hololive_members.txt'
+    
+    with open(MEMBER_FILE_PATH, 'r') as f:
+        hololive_members_list = f.readlines()[1].split(',')
+        print(hololive_members_list)
+
+    #Delete the break symbol in the last member
+    hololive_members_list[-1] = hololive_members_list[-1].replace('\n', '')
+
+    return hololive_members_list
+
 
 def get_tomorrow():
 
