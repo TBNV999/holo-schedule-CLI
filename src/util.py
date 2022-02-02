@@ -153,7 +153,6 @@ def get_hololive_members():
     
     with open(MEMBER_FILE_PATH, 'r') as f:
         hololive_members_list = f.readlines()[1].split(',')
-        print(hololive_members_list)
 
     #Delete the break symbol in the last member
     hololive_members_list[-1] = hololive_members_list[-1].replace('\n', '')
