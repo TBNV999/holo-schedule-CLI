@@ -1,3 +1,3 @@
 #Plese do not edit
 ホロライブ,ときのそら,ロボ子さん,さくらみこ,白上フブキ,夏色まつり,夜空メル,赤井はあと,アキロゼ,湊あくあ,癒月ちょこ,癒月ちょこSub,百鬼あやめ,紫咲シオン,大空スバル,大神ミオ,猫又おかゆ,戌神ころね,不知火フレア,白銀ノエル,宝鐘マリン,兎田ぺこら,潤羽るしあ,星街すいせい,天音かなた,角巻わため,常闇トワ,姫森ルーナ,雪花ラミィ,桃鈴ねね,獅白ぼたん,尾丸ポルカ,ラプラス,鷹嶺ルイ,博衣こより,沙花叉クロヱ,風真いろは
-ホロスターズ,花咲みやび,奏手イヅル,アルランディス,律可,アステル・レダ,岸堂天真,夕刻ロベル,影山シエン,荒咬オウガ,AZKi,Risu,Moona,Iofi,Ollie,Anya,Reine,holoID,Calli,Kiara,Ina,Gura,Amelia,holoEN,IRyS,Sana,Fauna,Kronii,Mumei,Baelz
+ホロスターズ,花咲みやび,奏手イヅル,アルランディス,律可,アステル・レダ,岸堂天真,夕刻ロベル,影山シエン,荒咬オウガ,AZKi,Risu,Moona,Iofi,Ollie,Anya,Reine,Zeta,Kaela,Kodo,holoID,Calli,Kiara,Ina,Gura,Amelia,holoEN,IRyS,Sana,Fauna,Kronii,Mumei,Baelz
