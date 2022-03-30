@@ -98,10 +98,15 @@ def get_en_list():
 
     EN_FILE_PATH = 'text/hololive_members_en.txt'
 
+    en_list = []
+
     with open(EN_FILE_PATH, 'r') as f:
 
         # Ignore the message of the first row
-        en_list = f.readlines()[1].split(',')
+        file_content = f.readlines()[1:]
+
+    for member_block in file_content:
+        en_list.extend(member_block.split(','))
 
     # Delete break symbol
     en_list[-1] = en_list[-1].replace('\n', '')
