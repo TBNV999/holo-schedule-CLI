@@ -57,13 +57,20 @@ def check_timezone():
     return timezone
 
 
-def get_index_list(members_list):
-
+def convert_into_en_list(members_list):
+    
     JA_LIST = get_all_members_list()
+    EN_LIST = get_en_list()
+    result = []
 
-    index_list = tuple([JA_LIST.index(member.replace("サブ", "")) for member in members_list])
+    for member in members_list:
+        try:
+            member_index = JA_LIST.index(member.replace("サブ", ""))
+            result.append(EN_LIST[member_index])
+        except ValueError:
+            result.append(member)
 
-    return index_list
+    return result
 
 
 def fetch_title(url_list):

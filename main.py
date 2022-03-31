@@ -57,13 +57,9 @@ def main(args):
 
     # Convert member's name into English
     if args.eng:
-        en_members_list = get_en_list()
-        index_list = get_index_list(members_list)
-
-        members_list = [en_members_list[member] for member in index_list]
+        members_list = convert_into_en_list(members_list)
 
     print('     Time      Member            Streaming URL          ({})'.format(timezone))
-
 
 
     for i, (time, member, url) in enumerate(zip(time_list, members_list, url_list)):
